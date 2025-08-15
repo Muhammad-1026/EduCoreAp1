@@ -18,7 +18,7 @@ public class Student : Entity
 
     public string? ImageUrl { get; private set; }
 
-    public Gender Gender { get; private set; }
+    public Gender Gender { get; private set; } = Gender.Unknown;
 
     public bool IsActive { get; private set; }
 
@@ -111,12 +111,4 @@ public class Student : Entity
             "IsActive cannot be null."
         );
     }
-}
-
-public enum Gender
-{
-    Unknown,
-    Male,
-    Female,
-    Other
 }
