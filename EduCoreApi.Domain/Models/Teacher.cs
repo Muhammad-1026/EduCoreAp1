@@ -1,5 +1,7 @@
 ﻿using EduCoreApi.Domain.Common;
+using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
+using static EduCoreApi.Domain.Models.Student;
 
 namespace EduCoreApi.Domain.Models;
 
@@ -28,6 +30,54 @@ public class Teacher : Entity
         PhoneNumber = phoneNumber;
         Address = address;
         Gender = gender;
+        IsActive = isActive;
+    }
+
+    public void SetFullName(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+            throw new BussinessLogicException(TeacherErrors.FullNameCantBeNull);
+
+        FullName = fullName;
+    }
+
+    public void SetBirthDate(DateTime birthDate)
+    {
+        if (birthDate == default)
+            throw new BussinessLogicException(TeacherErrors.BirthDateCantBeNull);
+
+        BirthDate = birthDate;
+    }
+
+    public void SetPhoneNumber(string phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            throw new BussinessLogicException(TeacherErrors.PhoneNumberCantBeNull);
+
+        PhoneNumber = phoneNumber;
+    }
+
+    public void SetAddress(string address)
+    {
+        if (string.IsNullOrWhiteSpace(address))
+            throw new BussinessLogicException(TeacherErrors.AddressCantBeNull);
+
+        Address = address;
+    }
+
+    public void SetGender(Gender gender)
+    {
+        if (!Enum.IsDefined(typeof(Gender), gender) || gender == Gender.Unknown)
+            throw new BussinessLogicException(StudentsErrors.GenderIsInvalid);
+
+        Gender = gender;
+    }
+
+    public void SetIsActive(bool isActive)
+    {
+        if (!IsActive)
+            throw new BussinessLogicException(TeacherErrors.FullNameCantBeNull);
+
         IsActive = isActive;
     }
 

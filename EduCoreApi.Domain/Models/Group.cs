@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace EduCoreApi.Domain.Models;
 
-namespace EduCoreApi.Domain.Models
+public class Group
 {
-    internal class Group
-    {
-    }
 }
