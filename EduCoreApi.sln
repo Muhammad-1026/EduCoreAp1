@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduCoreApi.API", "EduCoreApi\EduCoreApi.API.csproj", "{32D58B38-7A47-4A89-B4BB-4EE1955AF73E}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduCoreApi.Domain", "EduCoreApi.Domain\EduCoreApi.Domain.csproj", "{8C4F934D-76EF-4F15-9E25-3BBFF5BABF35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduCoreApi.Infrastructure", "EduCoreApi.Infrastructure\EduCoreApi.Infrastructure.csproj", "{BCAC3B33-4470-4137-ABB1-A5E29BF32B67}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduCoreApi.Persistence", "EduCoreApi.Persistence\EduCoreApi.Persistence.csproj", "{C495CBE8-2E11-4675-8CE9-7DEA3E6B52FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduCoreApi.Shared", "EduCoreApi.Shared\EduCoreApi.Shared.csproj", "{34E88DD5-CB3E-4F1E-A8ED-B8B5CFDA795D}"
 EndProject
@@ -41,10 +39,6 @@ Global
 		{BCAC3B33-4470-4137-ABB1-A5E29BF32B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCAC3B33-4470-4137-ABB1-A5E29BF32B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCAC3B33-4470-4137-ABB1-A5E29BF32B67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C495CBE8-2E11-4675-8CE9-7DEA3E6B52FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C495CBE8-2E11-4675-8CE9-7DEA3E6B52FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C495CBE8-2E11-4675-8CE9-7DEA3E6B52FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C495CBE8-2E11-4675-8CE9-7DEA3E6B52FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34E88DD5-CB3E-4F1E-A8ED-B8B5CFDA795D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34E88DD5-CB3E-4F1E-A8ED-B8B5CFDA795D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E88DD5-CB3E-4F1E-A8ED-B8B5CFDA795D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,7 +52,6 @@ Global
 		{16A2501A-EE67-4A4F-B0F7-4EEDA8AD6CC1} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{8C4F934D-76EF-4F15-9E25-3BBFF5BABF35} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{BCAC3B33-4470-4137-ABB1-A5E29BF32B67} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
-		{C495CBE8-2E11-4675-8CE9-7DEA3E6B52FA} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{34E88DD5-CB3E-4F1E-A8ED-B8B5CFDA795D} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
