@@ -2,6 +2,7 @@
 using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
 
 namespace EduCoreApi.Domain.Models;
 
@@ -12,6 +13,7 @@ public class Student : Entity
     public string? Email { get; private set; }
     public string PhoneNumber { get; private set; } = default!;
     public string Address { get; private set; } = default!;
+    public bool IsDormitoryResident { get; private set; }
     public string? ImageUrl { get; private set; }
     public Gender Gender { get; private set; } = Gender.Unknown;
     public bool IsActive { get; private set; }
@@ -53,11 +55,27 @@ public class Student : Entity
 
     public void SetEmail(string? email)
     {
-        if (!string.IsNullOrWhiteSpace(email) && !email.Contains("@"))
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Email = null;
+            return;
+        }
+
+        try
+        {
+            var addr = new MailAddress(email);
+
+            if (addr.Address != email)
+                throw new BussinessLogicException(StudentsErrors.EmailIsInvalid);
+        }
+        catch (FormatException)
+        {
             throw new BussinessLogicException(StudentsErrors.EmailIsInvalid);
+        }
 
         Email = email;
     }
+
 
     public void SetPhoneNumber(string phoneNumber)
     {
@@ -76,6 +94,11 @@ public class Student : Entity
             throw new BussinessLogicException(StudentsErrors.AddressCantBeNull);
 
         Address = address;
+    }
+
+    public void SetIsDormitoryResident(bool isDormitoryResident)
+    {
+        IsDormitoryResident = isDormitoryResident;
     }
 
     public void SetImageUrl(string? imageUrl)
@@ -119,71 +142,80 @@ public class Student : Entity
         IsActive = true;
     }
 
+    public void Deactivate()
+    {
+        if (!IsActive)
+            throw new BussinessLogicException(StudentsErrors.AlreadyInactive);
+
+        IsActive = false;
+    }
+
     public static class StudentsErrors
     {
         public static readonly Error FullNameCantBeNull = new(
             "Student.FullNameCantBeNull",
-            "Full name cannot be null or empty."
+            "Полное имя обязательно."
         );
 
         public static readonly Error BirthDateCantBeNull = new(
             "Student.BirthDateCantBeNull",
-            "Birth date cannot be null."
+            "Дата рождения обязательна."
         );
 
         public static readonly Error BirthDateIsInvalid = new(
            "Student.BirthDateIsInvalid",
-           "Birth date is invalid. Age must be between 10 and 100 years."
+           "Недопустимая дата рождения. Возраст должен быть от 10 до 100 лет."
         );
 
         public static readonly Error EmailIsInvalid = new(
            "Student.EmailIsInvalid",
-           "Provided email is not valid."
+           "Недопустимый адрес электронной почты."
         );
 
         public static readonly Error PhoneNumberCantBeNull = new(
             "Student.PhoneNumberCantBeNull",
-            "Phone number cannot be null or empty."
+            "Номер телефона обязателен."
         );
 
         public static readonly Error PhoneNumberIsInvalid = new(
             "Student.PhoneNumberIsInvalid",
-            "Phone number format is invalid (must be in international E.164 format)."
+            "Недопустимый формат номера телефона (E.164)."
         );
 
         public static readonly Error AddressCantBeNull = new(
             "Student.AddressCantBeNull",
-            "Address cannot be null or empty."
+            "Адрес обязателен."
         );
 
         public static readonly Error ImageUrlIsInvalid = new(
             "Student.ImageUrlIsInvalid",
-            "Image URL is not valid."
+            "Недопустимая ссылка на изображение."
         );
 
         public static readonly Error GenderIsInvalid = new(
             "Student.GenderIsInvalid",
-            "Provided gender is invalid."
+            "Недопустимое значение пола."
         );
 
         public static readonly Error CantActivateWithoutGroup = new(
             "Student.CantActivateWithoutGroup",
-            "Student cannot be activated without being assigned to a group."
+            "Невозможно активировать без группы."
         );
 
         public static readonly Error AlreadyActive = new(
             "Student.AlreadyActive",
-            "The student is already active."
+            "Студент уже активирован."
         );
 
         public static readonly Error AlreadyInactive = new(
             "Student.AlreadyInactive",
-            "The student is already inactive."
+            "Студент уже деактивирован."
         );
 
         public static readonly Error GroupIdCantBeNull = new(
             "Student.GroupIdCantBeNull",
-            "Group ID cannot be null."
+            "Идентификатор группы обязателен."
         );
     }
+
 }

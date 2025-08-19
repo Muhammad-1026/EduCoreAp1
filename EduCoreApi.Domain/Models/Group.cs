@@ -1,22 +1,22 @@
-﻿using EduCoreApi.Shared.Exeptions;
+﻿using EduCoreApi.Domain.Common;
+using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
 
 namespace EduCoreApi.Domain.Models;
 
-public class Group
+public class Group : Entity
 {
-    public Guid Id { get; private set; }
-
     public string Name { get; private set; } = default!;
-
     public int CourseNumber { get; private set; }
-
     public string? Description { get; private set; }
 
-    public Group(string name, int courseNumber)
+    public ICollection<Student> Students { get; private set; } = new List<Student>();
+
+    public Group(string name, int courseNumber, Guid createdBy, string? description = null) : base(createdBy)
     {
-        Name = name;
-        CourseNumber = courseNumber;
+        SetName(name);
+        SetCourseNumber(courseNumber);
+        SetDescription(description);
     }
 
     public void SetName(string name)
@@ -29,34 +29,28 @@ public class Group
 
     public void SetCourseNumber(int courseNumber)
     {
-        if (courseNumber <= 0)
-            throw new BussinessLogicException(GroupErrors.CourseNumberCantBeNull);
+        if (courseNumber < 1 || courseNumber > 6)
+            throw new BussinessLogicException(GroupErrors.CourseNumberIsInvalid);
 
         CourseNumber = courseNumber;
     }
 
     public void SetDescription(string? description)
     {
-        if (string.IsNullOrWhiteSpace(description))
-            throw new BussinessLogicException(GroupErrors.DescriptionCantBeNull);
-        Description = description;
+        Description = string.IsNullOrWhiteSpace(description) ? null : description;
     }
 
-    public class GroupErrors
+    public static class GroupErrors
     {
         public static readonly Error NameCantBeNull = new(
             "Group.NameCantBeNull",
-            "Name cannot be null or empty."
+            "Название группы обязательно."
         );
 
-        public static readonly Error CourseNumberCantBeNull = new(
-            "Group.CourseNumberCantBeNull",
-            "Course number cannot be null or empty."
+        public static readonly Error CourseNumberIsInvalid = new(
+            "Group.CourseNumberIsInvalid",
+            "Номер курса должен быть от 1 до 6."
         );
 
-        public static readonly Error DescriptionCantBeNull = new(
-            "Group.DescriptionCantBeNull",
-            "Description cannot be null or empty."
-        );
     }
 }

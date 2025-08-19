@@ -1,7 +1,7 @@
 ﻿using EduCoreApi.Domain.Common;
 using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
-using static EduCoreApi.Domain.Models.Student;
+using System.Net.Mail;
 
 namespace EduCoreApi.Domain.Models;
 
@@ -23,14 +23,14 @@ public class Teacher : Entity
 
     public bool IsActive { get; private set; }
 
-    public Teacher(string fullName, DateTime birthDate, string phoneNumber, string address, Gender gender, bool isActive)
+    public Teacher(string fullName, DateTime birthDate, string phoneNumber, string address, Gender gender, bool isActive, Guid createdBy) : base(createdBy)
     {
-        FullName = fullName;
-        BirthDate = birthDate;
-        PhoneNumber = phoneNumber;
-        Address = address;
-        Gender = gender;
-        IsActive = isActive;
+        SetFullName(fullName);
+        SetBirthDate(birthDate);
+        SetPhoneNumber(phoneNumber);
+        SetAddress(address);
+        SetGender(gender);
+        SetIsActive(isActive);
     }
 
     public void SetFullName(string fullName)
@@ -47,6 +47,25 @@ public class Teacher : Entity
             throw new BussinessLogicException(TeacherErrors.BirthDateCantBeNull);
 
         BirthDate = birthDate;
+    }
+
+    public void SetEmail(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new BussinessLogicException(TeacherErrors.EmailIsInvalid);
+
+        try
+        {
+            var addr = new MailAddress(email);
+            if (addr.Address != email)
+                throw new BussinessLogicException(TeacherErrors.EmailIsInvalid);
+        }
+        catch (FormatException)
+        {
+            throw new BussinessLogicException(TeacherErrors.EmailIsInvalid);
+        }
+
+        Email = email;
     }
 
     public void SetPhoneNumber(string phoneNumber)
@@ -68,16 +87,13 @@ public class Teacher : Entity
     public void SetGender(Gender gender)
     {
         if (!Enum.IsDefined(typeof(Gender), gender) || gender == Gender.Unknown)
-            throw new BussinessLogicException(StudentsErrors.GenderIsInvalid);
+            throw new BussinessLogicException(TeacherErrors.GenderIsInvalid);
 
         Gender = gender;
     }
 
     public void SetIsActive(bool isActive)
     {
-        if (!IsActive)
-            throw new BussinessLogicException(TeacherErrors.FullNameCantBeNull);
-
         IsActive = isActive;
     }
 
@@ -85,27 +101,32 @@ public class Teacher : Entity
     {
         public static readonly Error FullNameCantBeNull = new(
             "Teacher.FullNameCantBeNull",
-            "Full name cannot be null or empty."
+            "ФИО преподавателя обязательно для заполнения."
         );
 
         public static readonly Error BirthDateCantBeNull = new(
             "Teacher.BirthDateCantBeNull",
-            "Birth date cannot be default."
+            "Дата рождения обязательна."
+        );
+
+        public static readonly Error EmailIsInvalid = new(
+            "Teacher.EmailIsInvalid",
+            "Некорректный формат электронной почты."
         );
 
         public static readonly Error PhoneNumberCantBeNull = new(
             "Teacher.PhoneNumberCantBeNull",
-            "Phone number cannot be null or empty."
+            "Номер телефона обязателен."
         );
 
         public static readonly Error AddressCantBeNull = new(
             "Teacher.AddressCantBeNull",
-            "Address cannot be null or empty."
+            "Адрес обязателен."
         );
 
         public static readonly Error GenderIsInvalid = new(
-           "Student.GenderIsInvalid",
-           "Provided gender is invalid."
+           "Teacher.GenderIsInvalid",
+           "Указан недопустимый пол."
        );
     }
 }

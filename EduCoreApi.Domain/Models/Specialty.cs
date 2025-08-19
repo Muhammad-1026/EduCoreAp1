@@ -10,10 +10,17 @@ public class Specialty : Entity
     public string Code { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public Specialty(string name, string code)
+    public Guid DepartmentId { get; private set; }
+    public Department Department { get; private set; } = default!;
+
+    public ICollection<Group> Groups { get; private set; } = new List<Group>();
+
+    public Specialty(string name, string code, Guid departmentId, Guid createdBy, string? description = null) : base(createdBy)
     {
-        Name = name;
-        Code = code;
+        SetName(name);
+        SetCode(code);
+        SetDepartmentId(departmentId);
+        SetDescription(description);
     }
 
     public void SetName(string name)
@@ -34,27 +41,40 @@ public class Specialty : Entity
 
     public void SetDescription(string? description)
     {
-        if (string.IsNullOrWhiteSpace(description))
+        if (description is not null && string.IsNullOrWhiteSpace(description))
             throw new BussinessLogicException(SpecialtyErrors.DescriptionCantBeNull);
 
         Description = description;
     }
 
-    public class SpecialtyErrors
+    public void SetDepartmentId(Guid departmentId)
+    {
+        if (departmentId == Guid.Empty)
+            throw new BussinessLogicException(SpecialtyErrors.DepartmentIdCantBeNull);
+
+        DepartmentId = departmentId;
+    }
+
+    public static class SpecialtyErrors
     {
         public static readonly Error NameCantBeNull = new(
             "Specialty.NameCantBeNull",
-            "Name cannot be null or empty."
+            "Название специальности обязательно."
         );
 
         public static readonly Error CodeCantBeNull = new(
             "Specialty.CodeCantBeNull",
-            "Code cannot be null or empty."
+            "Код специальности обязателен."
         );
 
         public static readonly Error DescriptionCantBeNull = new(
             "Specialty.DescriptionCantBeNull",
-            "Description cannot be null or empty."
+            "Описание не может быть пустым или состоять только из пробелов."
+        );
+
+        public static readonly Error DepartmentIdCantBeNull = new(
+            "Specialty.DepartmentIdCantBeNull",
+            "Идентификатор кафедры обязателен."
         );
     }
 }

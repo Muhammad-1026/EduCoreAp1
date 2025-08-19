@@ -4,16 +4,16 @@ using EduCoreApi.Shared.Models;
 
 namespace EduCoreApi.Domain.Models;
 
-public class Department : Entity
+public class Course : Entity
 {
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public ICollection<Course> Courses { get; private set; } = new List<Course>();
-    public ICollection<Teacher> Teachers { get; private set; } = new List<Teacher>();
-    public ICollection<Subject> Subjects { get; private set; } = new List<Subject>();
+    public ICollection<CourseTeacher> Teachers { get; private set; } = new List<CourseTeacher>();
+    public ICollection<CourseSubject> Subjects { get; private set; } = new List<CourseSubject>();
+    public ICollection<CourseStudent> Students { get; private set; } = new List<CourseStudent>();
 
-    public Department(string name, Guid createdBy, string? description = null) : base(createdBy)
+    public Course(string name, string? description, Guid createdBy) : base(createdBy)
     {
         SetName(name);
         SetDescription(description);
@@ -22,7 +22,7 @@ public class Department : Entity
     public void SetName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new BussinessLogicException(DepartmentErrors.NameCantBeNull);
+            throw new BussinessLogicException(CourseErrors.NameCantBeNull);
 
         Name = name;
     }
@@ -30,20 +30,20 @@ public class Department : Entity
     public void SetDescription(string? description)
     {
         if (description is not null && string.IsNullOrWhiteSpace(description))
-            throw new BussinessLogicException(DepartmentErrors.DescriptionCantBeEmpty);
+            throw new BussinessLogicException(CourseErrors.DescriptionCantBeEmpty);
 
         Description = description;
     }
 
-    public static class DepartmentErrors
+    public static class CourseErrors
     {
         public static readonly Error NameCantBeNull = new(
-            "Department.NameCantBeNull",
-            "Название кафедры обязательно."
+            "Course.NameCantBeNull",
+            "Название курса не может быть пустым."
         );
 
         public static readonly Error DescriptionCantBeEmpty = new(
-            "Department.DescriptionCantBeEmpty",
+            "Course.DescriptionCantBeEmpty",
             "Описание не может быть пустым или состоять только из пробелов."
         );
     }

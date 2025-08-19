@@ -7,12 +7,15 @@ namespace EduCoreApi.Domain.Models;
 public class Subject : Entity
 {
     public string Name { get; private set; } = default!;
-
     public string? Description { get; private set; }
 
-    public Subject(string name)
+    public ICollection<Grade> Grades { get; private set; } = new List<Grade>();
+    public ICollection<CourseSubject> CourseSubjects { get; private set; } = new List<CourseSubject>();
+
+    public Subject(string name, Guid createdBy, string? description = null) : base(createdBy)
     {
-        Name = name;
+        SetName(name);
+        SetDescription(description);
     }
 
     public void SetName(string name)
@@ -25,22 +28,22 @@ public class Subject : Entity
 
     public void SetDescription(string? description)
     {
-        if (string.IsNullOrWhiteSpace(description))
-            throw new BussinessLogicException(SubjectErrors.DescriptionCantBeNull);
+        if (description is not null && string.IsNullOrWhiteSpace(description))
+            throw new BussinessLogicException(SubjectErrors.DescriptionCantBeEmpty);
 
         Description = description;
     }
 
-    public class SubjectErrors
+    public static class SubjectErrors
     {
         public static readonly Error NameCantBeNull = new(
             "Subject.NameCantBeNull",
-            "Name cannot be null or empty."
+            "Название предмета обязательно."
         );
 
-        public static readonly Error DescriptionCantBeNull = new(
-            "Subject.DescriptionCantBeNull",
-            "Description cannot be null or empty."
+        public static readonly Error DescriptionCantBeEmpty = new(
+           "Subject.DescriptionCantBeEmpty",
+           "Описание не может быть пустым или состоять только из пробелов."
         );
     }
 }
