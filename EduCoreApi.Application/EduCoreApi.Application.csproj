@@ -9,19 +9,30 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="9.2.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.2.0" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Mapster.EFCore" Version="5.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Students\" />
-    <Folder Include="Groups\" />
-    <Folder Include="Grades\" />
-    <Folder Include="Teachers\" />
-    <Folder Include="Courses\" />
-    <Folder Include="Subjects\" />
-    <Folder Include="Departments\" />
-    <Folder Include="Speciality\" />
-    <Folder Include="Attendances\" />
-    <Folder Include="TimeTables\" />
+    <Folder Include="Feature\Grades\" />
+    <Folder Include="Feature\Groups\Commands\" />
+    <Folder Include="Feature\Students\Commands\" />
+    <Folder Include="Feature\Students\Queries\" />
+    <Folder Include="Feature\Students\Repositories\" />
+    <Folder Include="Feature\Students\Specifications\" />
+    <Folder Include="Feature\Teachers\" />
+    <Folder Include="Feature\Courses\" />
+    <Folder Include="Feature\Subjects\" />
+    <Folder Include="Feature\Departments\" />
+    <Folder Include="Feature\Speciality\" />
+    <Folder Include="Feature\Attendances\" />
+    <Folder Include="Feature\TimeTables\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EduCoreApi.Domain\EduCoreApi.Domain.csproj" />
+    <ProjectReference Include="..\EduCoreApi.Shared\EduCoreApi.Shared.csproj" />
   </ItemGroup>
 
 </Project>
