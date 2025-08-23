@@ -30,7 +30,7 @@ public class Attendance : Entity
 
         StudentId = studentId;
     }
-
+        
     public void SetSubjectId(Guid subjectId)
     {
         if (subjectId == Guid.Empty)
