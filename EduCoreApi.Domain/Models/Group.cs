@@ -10,7 +10,8 @@ public class Group : Entity
     public int CourseNumber { get; private set; }
     public string? Description { get; private set; }
 
-    public ICollection<Student> Students { get; private set; } = new List<Student>();
+    public Guid SpecialityId { get; private set; }
+    public Speciality Speciality { get; private set; } = default!;
 
     public Group(string name, int courseNumber, Guid createdBy, string? description = null) : base(createdBy)
     {

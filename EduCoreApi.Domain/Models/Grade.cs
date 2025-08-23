@@ -8,8 +8,8 @@ public class Grade : Entity
     public Guid StudentId { get; private set; }
     public Student Student { get; private set; } = default!;
 
-    public Guid CourseSubjectId { get; private set; }
-    public CourseSubject CourseSubject { get; private set; } = default!;
+    public Guid SubjectId { get; private set; }
+    public Subject Subject { get; private set; } = default!;
 
     public int Value { get; private set; }
     public GradeType Type { get; private set; }

@@ -9,10 +9,6 @@ public class Department : Entity
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public ICollection<Course> Courses { get; private set; } = new List<Course>();
-    public ICollection<Teacher> Teachers { get; private set; } = new List<Teacher>();
-    public ICollection<Subject> Subjects { get; private set; } = new List<Subject>();
-
     public Department(string name, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);

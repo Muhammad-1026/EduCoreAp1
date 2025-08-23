@@ -4,7 +4,7 @@ using EduCoreApi.Shared.Models;
 
 namespace EduCoreApi.Domain.Models;
 
-public class Specialty : Entity
+public class Speciality : Entity
 {
     public string Name { get; private set; } = default!;
     public string Code { get; private set; } = default!;
@@ -13,9 +13,7 @@ public class Specialty : Entity
     public Guid DepartmentId { get; private set; }
     public Department Department { get; private set; } = default!;
 
-    public ICollection<Group> Groups { get; private set; } = new List<Group>();
-
-    public Specialty(string name, string code, Guid departmentId, Guid createdBy, string? description = null) : base(createdBy)
+    public Speciality(string name, string code, Guid departmentId, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);
         SetCode(code);

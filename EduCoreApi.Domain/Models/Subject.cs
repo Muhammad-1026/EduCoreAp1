@@ -9,9 +9,6 @@ public class Subject : Entity
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public ICollection<Grade> Grades { get; private set; } = new List<Grade>();
-    public ICollection<CourseSubject> CourseSubjects { get; private set; } = new List<CourseSubject>();
-
     public Subject(string name, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);

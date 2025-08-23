@@ -8,7 +8,7 @@ public class StudentMapster : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<Student, GetStudentDto>();
+        config.NewConfig<Student, StudentDto>();
         config.NewConfig<CreateStudentDto, Student>();
         config.NewConfig<UpdateStudentDto, Student>();
     }

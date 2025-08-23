@@ -20,12 +20,10 @@
     <Folder Include="Feature\Attendances\Repositories\" />
     <Folder Include="Feature\Attendances\Specifications\" />
     <Folder Include="Feature\Courses\Commands\" />
-    <Folder Include="Feature\Courses\Models\" />
     <Folder Include="Feature\Courses\Queries\" />
     <Folder Include="Feature\Courses\Repositories\" />
     <Folder Include="Feature\Courses\Specifications\" />
     <Folder Include="Feature\Departments\Commands\" />
-    <Folder Include="Feature\Departments\Models\" />
     <Folder Include="Feature\Departments\Queries\" />
     <Folder Include="Feature\Departments\Specifications\" />
     <Folder Include="Feature\Departments\Repositories\" />
@@ -45,7 +43,6 @@
     <Folder Include="Feature\Students\Commands\" />
     <Folder Include="Feature\Students\Queries\" />
     <Folder Include="Feature\Students\Repositories\" />
-    <Folder Include="Feature\Students\Specifications\" />
     <Folder Include="Feature\Subjects\Commands\" />
     <Folder Include="Feature\Subjects\Models\" />
     <Folder Include="Feature\Subjects\Queries\" />
