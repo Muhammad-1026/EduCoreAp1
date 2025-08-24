@@ -1,8 +1,7 @@
 ﻿using EduCoreApi.Domain.Common;
+using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
-
-namespace EduCoreApi.Domain.Models;
 
 public class Timetable : Entity
 {
@@ -12,19 +11,20 @@ public class Timetable : Entity
     public Guid GroupId { get; private set; }
     public Group Group { get; private set; } = default!;
 
-    public DayOfWeek DayOfWeek { get; private set; } 
+    public DayOfWeek DayOfWeek { get; private set; }
 
     public TimeOnly StartTime { get; private set; }
-    public TimeOnly EndTime { get; private set; } 
+    public TimeOnly EndTime { get; private set; }
 
-    public Timetable(Guid subjectId, Guid groupId, DayOfWeek dayOfWeek, TimeOnly startTime, TimeOnly endTime)
+    public Timetable(Guid subjectId, Guid groupId, DayOfWeek dayOfWeek,TimeOnly startTime, TimeOnly endTime, Guid createdBy) : base(createdBy) 
     {
-        SubjectId = subjectId;
-        GroupId = groupId;
-        DayOfWeek = dayOfWeek;
-        StartTime = startTime;
-        EndTime = endTime;
+        SetSubjectId(subjectId);
+        SetGroupId(groupId);
+        SetDayOfWeek(dayOfWeek);
+        SetStartTime(startTime);
+        SetEndTime(endTime);
     }
+
 
     public void SetSubjectId(Guid subjectId)
     {
@@ -55,7 +55,6 @@ public class Timetable : Entity
         if (startTime < new TimeOnly(7, 0) || startTime > new TimeOnly(20, 0))
             throw new BussinessLogicException(TimetableErrors.StartTimeInvalid);
 
-
         StartTime = startTime;
     }
 
@@ -70,37 +69,36 @@ public class Timetable : Entity
         EndTime = endTime;
     }
 
-    public class TimetableErrors
+    public static class TimetableErrors
     {
         public static readonly Error SubjectIdCantBeNull = new(
             "Timetable.SubjectIdCantBeNull",
-            "Subject ID cannot be null."
+            "Идентификатор предмета обязателен."
         );
 
         public static readonly Error GroupIdCantBeNull = new(
             "Timetable.GroupIdCantBeNull",
-            "Group ID cannot be null."
+            "Идентификатор группы обязателен."
         );
 
         public static readonly Error DayOfWeekCantBeNull = new(
             "Timetable.DayOfWeekCantBeNull",
-            "Day of the week cannot be null."
+            "День недели обязателен."
         );
 
         public static readonly Error StartTimeInvalid = new(
             "Timetable.StartTimeInvalid",
-            "Start time is invalid."
+            "Время начала должно быть в диапазоне с 07:00 до 20:00."
         );
-
 
         public static readonly Error EndTimeCantBeNull = new(
             "Timetable.EndTimeCantBeNull",
-            "End time cannot be null."
+            "Время окончания обязательно."
         );
 
         public static readonly Error EndTimeMustBeGreaterThanStartTime = new(
             "Timetable.EndTimeMustBeGreaterThanStartTime",
-            "End time must be after start time."
+            "Время окончания должно быть позже времени начала."
         );
     }
 }

@@ -6,4 +6,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification" Version="9.2.0" />
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Students\" />
+    <Folder Include="Groups\" />
+    <Folder Include="Grades\" />
+    <Folder Include="Teachers\" />
+    <Folder Include="Courses\" />
+    <Folder Include="Subjects\" />
+    <Folder Include="Departments\" />
+    <Folder Include="Speciality\" />
+    <Folder Include="Attendances\" />
+    <Folder Include="TimeTables\" />
+  </ItemGroup>
+
 </Project>

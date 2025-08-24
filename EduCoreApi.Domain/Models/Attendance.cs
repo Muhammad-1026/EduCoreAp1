@@ -15,7 +15,7 @@ public class Attendance : Entity
     public DateTime Date { get; private set; }
     public bool IsPresent { get; private set; }
 
-    public Attendance(Guid studentId, Guid subjectId, DateTime date, bool isPresent)
+    public Attendance(Guid studentId, Guid subjectId, DateTime date, bool isPresent, Guid createdBy) : base(createdBy)
     {
         SetStudentId(studentId);
         SetSubjectId(subjectId);
@@ -52,21 +52,21 @@ public class Attendance : Entity
         IsPresent = isPresent;
     }
 
-    public class AttendanceErrors
+    public static class AttendanceErrors
     {
         public static readonly Error StudentIdCantBeNull = new(
             "Attendance.StudentIdCantBeNull",
-            "Student cannot be null.."
+            "Студент обязателен."
         );
 
         public static readonly Error SubjectIdCantBeNull = new(
             "Attendance.SubjectIdCantBeNull",
-            "Subject ID cannot be null."
+            "Предмет обязателен."
         );
 
         public static readonly Error DateCantBeNull = new(
             "Attendance.DateCantBeNull",
-            "Date cannot be null."
+            "Дата не может быть пустой."
         );
     }
 }
