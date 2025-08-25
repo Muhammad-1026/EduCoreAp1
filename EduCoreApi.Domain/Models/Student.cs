@@ -20,8 +20,9 @@ public class Student : Entity
 
     public Guid GroupId { get; private set; }
     public Group Group { get; private set; } = default!;
-    public ICollection<Grade> Grades { get; private set; } = new List<Grade>();
-    public ICollection<Attendance> Attendances { get; private set; } = new List<Attendance>();
+
+    public Guid SpecialityId { get; private set; }
+    public Speciality Speciality { get; private set; } = default!;
 
     public Student(string fullName,DateTime birthDate,string phoneNumber,string address,Gender gender,Guid createdBy) : base(createdBy)
     {

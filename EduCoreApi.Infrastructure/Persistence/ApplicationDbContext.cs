@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
     DbSet<Teacher> Teachers { get; set; }
     DbSet<Course> Courses { get; set; }
     DbSet<Subject> Subjects { get; set; }
-    DbSet<Specialty> Specialties { get; set; }
+    DbSet<Speciality> Specialties { get; set; }
     DbSet<Attendance> Attendances { get; set; }
     DbSet<Timetable> Timetables { get; set; }
     DbSet<Department> Departments { get; set; }

@@ -8,20 +8,16 @@ namespace EduCoreApi.Domain.Models;
 public class Teacher : Entity
 {
     public string FullName { get; private set; } = default!;
-
     public DateTime BirthDate { get; private set; }
-
     public string? Email { get; private set; }
-
     public string PhoneNumber { get; private set; } = default!;
-
     public string Address { get; private set; } = default!;
-
     public string? ImageUrl { get; private set; }
-
     public Gender Gender { get; private set; } = Gender.Unknown;
-
     public bool IsActive { get; private set; }
+
+    public Guid DepartmentId { get; private set; }
+    public Department Department { get; private set; } = default!;
 
     public Teacher(string fullName, DateTime birthDate, string phoneNumber, string address, Gender gender, bool isActive, Guid createdBy) : base(createdBy)
     {
