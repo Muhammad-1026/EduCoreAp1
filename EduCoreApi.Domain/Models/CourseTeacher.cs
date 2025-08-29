@@ -39,7 +39,7 @@ public class CourseTeacher : Entity
 
     public void SetIsCurator(bool isCurator)
     {
-        if (isCurator && Course != null && Course.Teachers.Any(t => t.IsCurator && t.TeacherId != TeacherId))
+        if (isCurator && Course != null && Course.CourseTeachers.Any(ct => ct.IsCurator && ct.TeacherId != TeacherId))
             throw new BussinessLogicException(CourseTeacherErrors.CuratorAlreadyExists);
 
         IsCurator = isCurator;

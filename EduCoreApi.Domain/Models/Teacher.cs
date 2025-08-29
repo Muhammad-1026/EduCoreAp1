@@ -19,6 +19,8 @@ public class Teacher : Entity
     public Guid DepartmentId { get; private set; }
     public Department Department { get; private set; } = default!;
 
+    public List<CourseTeacher> CourseTeachers { get; private set; } = new();
+
     public Teacher(string fullName, DateTime birthDate, string phoneNumber, string address, Gender gender, bool isActive, Guid createdBy) : base(createdBy)
     {
         SetFullName(fullName);

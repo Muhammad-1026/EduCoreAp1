@@ -9,6 +9,9 @@ public class Department : Entity
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
+    public List<Speciality> Specialities { get; private set; } = new();
+    public List<Teacher> Teachers { get; private set; } = new();
+
     public Department(string name, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);

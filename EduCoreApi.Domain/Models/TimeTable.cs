@@ -3,7 +3,7 @@ using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
 
-public class Timetable : Entity
+public class TimeTable : Entity
 {
     public Guid SubjectId { get; private set; }
     public Subject Subject { get; private set; } = default!;
@@ -16,7 +16,7 @@ public class Timetable : Entity
     public TimeOnly StartTime { get; private set; }
     public TimeOnly EndTime { get; private set; }
 
-    public Timetable(Guid subjectId, Guid groupId, DayOfWeek dayOfWeek,TimeOnly startTime, TimeOnly endTime, Guid createdBy) : base(createdBy) 
+    public TimeTable(Guid subjectId, Guid groupId, DayOfWeek dayOfWeek,TimeOnly startTime, TimeOnly endTime, Guid createdBy) : base(createdBy) 
     {
         SetSubjectId(subjectId);
         SetGroupId(groupId);
@@ -24,7 +24,6 @@ public class Timetable : Entity
         SetStartTime(startTime);
         SetEndTime(endTime);
     }
-
 
     public void SetSubjectId(Guid subjectId)
     {

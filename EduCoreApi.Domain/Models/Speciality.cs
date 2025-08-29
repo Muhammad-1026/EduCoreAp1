@@ -13,6 +13,9 @@ public class Speciality : Entity
     public Guid DepartmentId { get; private set; }
     public Department Department { get; private set; } = default!;
 
+    public List<Group> Groups { get; private set; } = new();
+    public List<Student> Students { get; private set; } = new();
+
     public Speciality(string name, string code, Guid departmentId, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);

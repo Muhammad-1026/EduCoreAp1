@@ -9,6 +9,9 @@ public class Course : Entity
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
+    public List<CourseTeacher> CourseTeachers { get; private set; } = new();
+    public List<CourseSubject> CourseSubjects { get; private set; } = new();
+
     public Course(string name, string? description, Guid createdBy) : base(createdBy)
     {
         SetName(name);

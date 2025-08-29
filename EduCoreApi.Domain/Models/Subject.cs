@@ -9,6 +9,8 @@ public class Subject : Entity
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
+    public List<TimeTable> TimeTables { get; private set; } = new();
+
     public Subject(string name, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);

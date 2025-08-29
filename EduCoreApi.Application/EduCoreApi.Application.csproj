@@ -9,9 +9,11 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="9.2.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.2.0" />
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Mapster.EFCore" Version="5.1.1" />
+    <PackageReference Include="MediatR" Version="13.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,9 +42,6 @@
     <Folder Include="Feature\Speciality\Queries\" />
     <Folder Include="Feature\Speciality\Repositories\" />
     <Folder Include="Feature\Speciality\Specifications\" />
-    <Folder Include="Feature\Students\Commands\" />
-    <Folder Include="Feature\Students\Queries\" />
-    <Folder Include="Feature\Students\Repositories\" />
     <Folder Include="Feature\Subjects\Commands\" />
     <Folder Include="Feature\Subjects\Models\" />
     <Folder Include="Feature\Subjects\Queries\" />

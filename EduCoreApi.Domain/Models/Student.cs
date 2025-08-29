@@ -24,6 +24,9 @@ public class Student : Entity
     public Guid SpecialityId { get; private set; }
     public Speciality Speciality { get; private set; } = default!;
 
+    //TODO
+    //public List<Cour>
+
     public Student(string fullName,DateTime birthDate,string phoneNumber,string address,Gender gender,Guid createdBy) : base(createdBy)
     {
         SetFullName(fullName);

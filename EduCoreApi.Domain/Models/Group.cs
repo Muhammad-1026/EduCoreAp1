@@ -13,6 +13,9 @@ public class Group : Entity
     public Guid SpecialityId { get; private set; }
     public Speciality Speciality { get; private set; } = default!;
 
+    public List<Student> Students { get; private set; } = new();
+    public List<TimeTable> TimeTables { get; private set; } = new();
+
     public Group(string name, int courseNumber, Guid createdBy, string? description = null) : base(createdBy)
     {
         SetName(name);

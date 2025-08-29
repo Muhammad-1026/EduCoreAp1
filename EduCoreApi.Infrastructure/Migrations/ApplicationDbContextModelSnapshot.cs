@@ -58,45 +58,6 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.ToTable("CourseTeachers");
                 });
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Attendance", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsPresent")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SubjectId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Attendances");
-                });
-
             modelBuilder.Entity("EduCoreApi.Domain.Models.Course", b =>
                 {
                     b.Property<Guid>("Id")
@@ -108,9 +69,6 @@ namespace EduCoreApi.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("DepartmentId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -127,42 +85,7 @@ namespace EduCoreApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("EduCoreApi.Domain.Models.CourseStudent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("CourseStudents");
                 });
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.CourseSubject", b =>
@@ -256,7 +179,7 @@ namespace EduCoreApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("SpecialtyId")
+                    b.Property<Guid>("SpecialityId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -267,12 +190,12 @@ namespace EduCoreApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SpecialtyId");
+                    b.HasIndex("SpecialityId");
 
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Specialty", b =>
+            modelBuilder.Entity("EduCoreApi.Domain.Models.Speciality", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -356,6 +279,9 @@ namespace EduCoreApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("SpecialityId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
@@ -365,6 +291,8 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
+
+                    b.HasIndex("SpecialityId");
 
                     b.ToTable("Students");
                 });
@@ -381,9 +309,6 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DepartmentId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -398,8 +323,6 @@ namespace EduCoreApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Subjects");
                 });
@@ -423,7 +346,7 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DepartmentId")
+                    b.Property<Guid>("DepartmentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")
@@ -459,51 +382,7 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("Grade", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CourseSubjectId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("SubjectId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseSubjectId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Grades");
-                });
-
-            modelBuilder.Entity("Timetable", b =>
+            modelBuilder.Entity("TimeTable", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -542,19 +421,19 @@ namespace EduCoreApi.Infrastructure.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Timetables");
+                    b.ToTable("TimeTable");
                 });
 
             modelBuilder.Entity("CourseTeacher", b =>
                 {
                     b.HasOne("EduCoreApi.Domain.Models.Course", "Course")
-                        .WithMany("Teachers")
+                        .WithMany("CourseTeachers")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EduCoreApi.Domain.Models.Teacher", "Teacher")
-                        .WithMany()
+                        .WithMany("CourseTeachers")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -564,61 +443,16 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Attendance", b =>
-                {
-                    b.HasOne("EduCoreApi.Domain.Models.Student", "Student")
-                        .WithMany("Attendances")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EduCoreApi.Domain.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Course", b =>
-                {
-                    b.HasOne("EduCoreApi.Domain.Models.Department", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("DepartmentId");
-                });
-
-            modelBuilder.Entity("EduCoreApi.Domain.Models.CourseStudent", b =>
-                {
-                    b.HasOne("EduCoreApi.Domain.Models.Course", "Course")
-                        .WithMany("Students")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EduCoreApi.Domain.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("EduCoreApi.Domain.Models.CourseSubject", b =>
                 {
                     b.HasOne("EduCoreApi.Domain.Models.Course", "Course")
-                        .WithMany("Subjects")
+                        .WithMany("CourseSubjects")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EduCoreApi.Domain.Models.Subject", "Subject")
-                        .WithMany("CourseSubjects")
+                        .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -630,15 +464,19 @@ namespace EduCoreApi.Infrastructure.Migrations
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.Group", b =>
                 {
-                    b.HasOne("EduCoreApi.Domain.Models.Specialty", null)
+                    b.HasOne("EduCoreApi.Domain.Models.Speciality", "Speciality")
                         .WithMany("Groups")
-                        .HasForeignKey("SpecialtyId");
+                        .HasForeignKey("SpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Speciality");
                 });
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Specialty", b =>
+            modelBuilder.Entity("EduCoreApi.Domain.Models.Speciality", b =>
                 {
                     b.HasOne("EduCoreApi.Domain.Models.Department", "Department")
-                        .WithMany()
+                        .WithMany("Specialities")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -654,56 +492,38 @@ namespace EduCoreApi.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Group");
-                });
+                    b.HasOne("EduCoreApi.Domain.Models.Speciality", "Speciality")
+                        .WithMany("Students")
+                        .HasForeignKey("SpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Subject", b =>
-                {
-                    b.HasOne("EduCoreApi.Domain.Models.Department", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("DepartmentId");
+                    b.Navigation("Group");
+
+                    b.Navigation("Speciality");
                 });
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.Teacher", b =>
                 {
-                    b.HasOne("EduCoreApi.Domain.Models.Department", null)
+                    b.HasOne("EduCoreApi.Domain.Models.Department", "Department")
                         .WithMany("Teachers")
-                        .HasForeignKey("DepartmentId");
-                });
-
-            modelBuilder.Entity("Grade", b =>
-                {
-                    b.HasOne("EduCoreApi.Domain.Models.CourseSubject", "CourseSubject")
-                        .WithMany()
-                        .HasForeignKey("CourseSubjectId")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EduCoreApi.Domain.Models.Student", "Student")
-                        .WithMany("Grades")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EduCoreApi.Domain.Models.Subject", null)
-                        .WithMany("Grades")
-                        .HasForeignKey("SubjectId");
-
-                    b.Navigation("CourseSubject");
-
-                    b.Navigation("Student");
+                    b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Timetable", b =>
+            modelBuilder.Entity("TimeTable", b =>
                 {
                     b.HasOne("EduCoreApi.Domain.Models.Group", "Group")
-                        .WithMany()
+                        .WithMany("TimeTables")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EduCoreApi.Domain.Models.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("TimeTables")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -715,18 +535,14 @@ namespace EduCoreApi.Infrastructure.Migrations
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.Course", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("CourseSubjects");
 
-                    b.Navigation("Subjects");
-
-                    b.Navigation("Teachers");
+                    b.Navigation("CourseTeachers");
                 });
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.Department", b =>
                 {
-                    b.Navigation("Courses");
-
-                    b.Navigation("Subjects");
+                    b.Navigation("Specialities");
 
                     b.Navigation("Teachers");
                 });
@@ -734,25 +550,25 @@ namespace EduCoreApi.Infrastructure.Migrations
             modelBuilder.Entity("EduCoreApi.Domain.Models.Group", b =>
                 {
                     b.Navigation("Students");
+
+                    b.Navigation("TimeTables");
                 });
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Specialty", b =>
+            modelBuilder.Entity("EduCoreApi.Domain.Models.Speciality", b =>
                 {
                     b.Navigation("Groups");
-                });
 
-            modelBuilder.Entity("EduCoreApi.Domain.Models.Student", b =>
-                {
-                    b.Navigation("Attendances");
-
-                    b.Navigation("Grades");
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.Subject", b =>
                 {
-                    b.Navigation("CourseSubjects");
+                    b.Navigation("TimeTables");
+                });
 
-                    b.Navigation("Grades");
+            modelBuilder.Entity("EduCoreApi.Domain.Models.Teacher", b =>
+                {
+                    b.Navigation("CourseTeachers");
                 });
 #pragma warning restore 612, 618
         }

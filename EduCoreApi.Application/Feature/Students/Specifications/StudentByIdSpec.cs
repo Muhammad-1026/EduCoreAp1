@@ -17,8 +17,8 @@ public sealed class StudentByIdSpec : DbSpecifications<Student>
 
         Query.Where(student => student.Id == StudentId);
 
-        Query.Include(student => student.Group)
-            .ThenInclude(group => group.Course)
-            .ThenInclude(course => course.Department);
+        Query.Include(group => group.Group);
+
+        Query.Include(student => student.Speciality);
     }
 }   
