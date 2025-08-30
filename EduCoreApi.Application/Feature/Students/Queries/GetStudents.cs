@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
+using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Application.Common.Specifications;
 using EduCoreApi.Application.Feature.Students.Models;
-using EduCoreApi.Application.Feature.Students.Repositories;
 using EduCoreApi.Domain.Models;
 using MapsterMapper;
 using MediatR;
