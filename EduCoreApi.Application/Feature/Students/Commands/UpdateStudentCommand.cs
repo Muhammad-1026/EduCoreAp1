@@ -16,32 +16,6 @@ public sealed record UpdateStudentCommand(Guid StudentId,
     Guid GroupId,
     Guid SpecialityId);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public sealed class UpdateStudentCommandValidator : AbstractValidator<UpdateStudentCommand>
 {
     public UpdateStudentCommandValidator()
@@ -51,12 +25,27 @@ public sealed class UpdateStudentCommandValidator : AbstractValidator<UpdateStud
         RuleFor(x => x.Email)
             .NotEmpty()
             .When(x => !string.IsNullOrWhiteSpace(x.Email));
+        RuleFor(x => x.ImageUrl)
+            .NotEmpty()
+            .When(x => !string.IsNullOrWhiteSpace(x.ImageUrl));
 
-        RuleFor(x => x.FullName).NotEmpty();
-        RuleFor(x => x.BirthDate).NotEmpty();
-        RuleFor(x => x.PhoneNumber).NotEmpty();
-        RuleFor(x => x.Address).NotEmpty();
-        RuleFor(x => x.IsDormitoryResident).NotEmpty();
-        //RuleFor(x => x.ImageUrl).
+        RuleFor(x => x.FullName)
+            .NotEmpty();
+        RuleFor(x => x.BirthDate)
+            .NotEmpty();
+        RuleFor(x => x.PhoneNumber)
+            .NotEmpty();
+        RuleFor(x => x.Address)
+            .NotEmpty();
+        RuleFor(x => x.IsDormitoryResident)
+            .NotEmpty();
+        RuleFor(x => x.Gender)
+            .NotEmpty();
+        RuleFor(x => x.IsActive)
+            .NotEmpty();
+        RuleFor(x => x.GroupId)
+            .GreaterThan(Guid.Empty);
+        RuleFor(x => x.SpecialityId)
+            .GreaterThan(Guid.Empty);
     }
 }
