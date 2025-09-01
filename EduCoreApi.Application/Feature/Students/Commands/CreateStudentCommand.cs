@@ -50,7 +50,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
     private readonly IMediator _mediator;
     private readonly TimeProvider _timeProvider;
 
-    public CreateStudentCommandHandler(IStudentRepository studentRepository, IMediator mediator, TimeProvider timeProvider)
+    public CreateStudentCommandHandler(IStudentRe pository studentRepository, IMediator mediator, TimeProvider timeProvider)
     {
         this.studentRepository = studentRepository;
         _mediator = mediator;
