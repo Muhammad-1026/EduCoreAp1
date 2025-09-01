@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ardalis.Specification.EntityFrameworkCore;
+using EduCoreApi.Application.Feature.Subjects.Repositories;
+using EduCoreApi.Domain.Models;
+using EduCoreApi.Infrastructure.Persistence;
 
-namespace EduCoreApi.Infrastructure.Repositories
+namespace EduCoreApi.Infrastructure.Repositories;
+
+internal sealed class SubjectRepository : RepositoryBase<Subject>, ISubjectRepository
 {
-    internal class SubjectRepository
+    public SubjectRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
     }
 }

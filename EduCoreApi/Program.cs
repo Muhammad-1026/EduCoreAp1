@@ -1,26 +1,26 @@
-using EduCoreApi.Application;
+п»їusing EduCoreApi.Application;
 using EduCoreApi.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;       
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices()
-    .AddInfrastructureServices(builder.Configuration)
-    .AddRepositories();
-
-builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// 1. DbContext'РЅРё DI РєРѕРЅС‚РµР№РЅРµСЂРіР° Т›СћС€РёС€
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-// DbContext'ни DI контейнерга ?ўшиш
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
+// 2. Custom extension services
+builder.Services.AddApplicationServices()
+    .AddRepositories();
+
+// 3. Swagger & Controllers
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
 var app = builder.Build();
 
+// 4. Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -28,9 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-app.MapControllers();  
+app.MapControllers();
 
 app.Run();

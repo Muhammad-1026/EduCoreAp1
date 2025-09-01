@@ -1,4 +1,6 @@
-﻿using EduCoreApi.Application.Feature.Students.Models;
+﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Feature.Students.Models;
+using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Models;
 using FluentValidation;
 using MediatR;
@@ -39,5 +41,28 @@ public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStud
             .NotEmpty();
         RuleFor(x => x.IsDormitoryResident)
             .NotEmpty();
+    }
+}
+
+internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, CreateStudentDto>
+{
+    private readonly IStudentRepository studentRepository;
+    private readonly IMediator _mediator;
+    private readonly TimeProvider _timeProvider;
+
+    public CreateStudentCommandHandler(IStudentRepository studentRepository, IMediator mediator, TimeProvider timeProvider)
+    {
+        this.studentRepository = studentRepository;
+        _mediator = mediator;
+        _timeProvider = timeProvider;
+    }
+
+    public async Task<CreateStudentDto> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
+    {
+        var student = new Student(request.FullName)
+        {
+            CreatedDate = _timeProvider.GetLocalNow().DateTime,
+        }
+
     }
 }

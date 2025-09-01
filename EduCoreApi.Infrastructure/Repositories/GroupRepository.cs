@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ardalis.Specification.EntityFrameworkCore;
+using EduCoreApi.Application.Feature.Groups.Repositories;
+using EduCoreApi.Infrastructure.Persistence;
+using System.Text.RegularExpressions;
 
-namespace EduCoreApi.Infrastructure.Repositories
+namespace EduCoreApi.Infrastructure.Repositories;
+
+internal sealed class GroupRepository : RepositoryBase<Group>, IGroupRepository
 {
-    internal class GroupRepository
+    public GroupRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
     }
 }

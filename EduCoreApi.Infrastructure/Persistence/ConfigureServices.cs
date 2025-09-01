@@ -5,13 +5,14 @@ using EduCoreApi.Application.Feature.Groups.Repositories;
 using EduCoreApi.Application.Feature.Specialitys.Repositories;
 using EduCoreApi.Application.Feature.Subjects.Repositories;
 using EduCoreApi.Application.Feature.Teachers.Repositories;
+using EduCoreApi.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EduCoreApi.Infrastructure.Persistence;
 
-public class ConfigureServices
+public static class ConfigureServices
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
@@ -23,7 +24,7 @@ public class ConfigureServices
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IStudentRepository, StudentRepository>();       
+        services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<ITeacherRepository, TeacherRepository>();
         services.AddScoped<IGroupRepository, GroupRepository>();
         services.AddScoped<ICourseRepository, CourseRepository>();
