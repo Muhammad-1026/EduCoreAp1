@@ -1,6 +1,6 @@
 ﻿using EduCoreApi.Shared.Models;
 
-namespace EduCoreApi.Application.Feature.Speciality;
+namespace EduCoreApi.Application.Feature.Specialitys;
 
 public class SpecialityError
 {

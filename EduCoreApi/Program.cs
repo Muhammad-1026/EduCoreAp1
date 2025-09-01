@@ -1,7 +1,12 @@
+using EduCoreApi.Application;
 using EduCoreApi.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;       
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationServices()
+    .AddInfrastructureServices(builder.Configuration)
+    .AddRepositories();
 
 builder.Services.AddControllers();
 

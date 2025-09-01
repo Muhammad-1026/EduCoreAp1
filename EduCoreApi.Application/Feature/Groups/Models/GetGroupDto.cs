@@ -1,4 +1,5 @@
 ﻿using EduCoreApi.Application.Feature.Students.Models;
+using EduCoreApi.Application.Feature.TimeTables.Models;
 
 namespace EduCoreApi.Application.Feature.Groups.Models;
 
