@@ -17,6 +17,6 @@ public class GetStudentDto
     public Gender Gender { get; set; }
     public bool IsActive { get; set; }
 
-    public GroupDto GroupDto { get; set; } = default!;
-    public SpecialityDto SpecialityDto { get; set; } = default!;
+    public GetGroupDto GetGroupDto { get; set; } = default!;
+    public GetSpecialityDto GetSpecialityDto { get; set; } = default!;
 }

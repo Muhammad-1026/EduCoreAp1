@@ -2,7 +2,7 @@
 using EduCoreApi.Domain.Models;
 using Mapster;
 
-namespace EduCoreApi.Application.Feature.Students;
+namespace EduCoreApi.Application.Common.Mappings;
 
 public class StudentMapster : IRegister
 {

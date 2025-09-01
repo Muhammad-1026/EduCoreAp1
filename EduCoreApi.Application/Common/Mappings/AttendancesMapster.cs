@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduCoreApi.Application.Feature.Grades
+namespace EduCoreApi.Application.Common.Mappings
 {
-    internal class GradeMapster
+    internal class AttendancesMapster
     {
     }
 }

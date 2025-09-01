@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduCoreApi.Application.Feature.Groups
+namespace EduCoreApi.Application.Common.Mappings
 {
-    internal class GroupMapster
+    internal class SpecialityMapster
     {
     }
 }

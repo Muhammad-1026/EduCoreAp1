@@ -5,16 +5,17 @@ using EduCoreApi.Shared.Models;
 
 public class TimeTable : Entity
 {
+    public DayOfWeek DayOfWeek { get; private set; }
+
+    public TimeOnly StartTime { get; private set; }
+    public TimeOnly EndTime { get; private set; }
+
     public Guid SubjectId { get; private set; }
     public Subject Subject { get; private set; } = default!;
 
     public Guid GroupId { get; private set; }
     public Group Group { get; private set; } = default!;
 
-    public DayOfWeek DayOfWeek { get; private set; }
-
-    public TimeOnly StartTime { get; private set; }
-    public TimeOnly EndTime { get; private set; }
 
     public TimeTable(Guid subjectId, Guid groupId, DayOfWeek dayOfWeek,TimeOnly startTime, TimeOnly endTime, Guid createdBy) : base(createdBy) 
     {

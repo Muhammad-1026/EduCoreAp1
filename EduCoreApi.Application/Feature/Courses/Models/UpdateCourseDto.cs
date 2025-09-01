@@ -1,9 +1,8 @@
-﻿namespace EduCoreApi.Application.Feature.Groups.Models;
+﻿namespace EduCoreApi.Application.Feature.Courses.Models;
 
-public class GroupDto
+public class UpdateCourseDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;
-    public int CourseNumber { get; set; }
     public string? Description { get; set; }
 }

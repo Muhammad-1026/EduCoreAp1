@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduCoreApi.Application.Feature.TimeTables
+namespace EduCoreApi.Application.Common.Mappings
 {
-    internal class TimeTableMapster
+    internal class GroupMapster
     {
     }
 }
