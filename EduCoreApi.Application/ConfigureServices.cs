@@ -19,6 +19,8 @@ public static class ConfigureServices
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly));
 
+        services.AddSingleton<TimeProvider>(TimeProvider.System);
+
 
         return services;
     }

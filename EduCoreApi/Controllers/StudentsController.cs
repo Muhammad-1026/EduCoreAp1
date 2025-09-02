@@ -1,4 +1,5 @@
-﻿using EduCoreApi.Application.Feature.Students.Models;
+﻿using EduCoreApi.Application.Feature.Students.Commands;
+using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Application.Feature.Students.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -30,16 +31,12 @@ public class StudentsController : ControllerBase
         return await _mediator.Send(new GetStudentByIdQuery(id), cancellationToken);
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreateStudent([FromBody] StudentCreateDto studentCreateDto)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return BadRequest(ModelState);
-    //    }
-    //    var createdStudent = await _studentService.CreateStudentAsync(studentCreateDto);
-    //    return CreatedAtAction(nameof(GetStudentById), new { id = createdStudent.Id }, createdStudent);
-    //}
+    [HttpPost]
+    public async Task<CreateStudentDto> Create([FromBody] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
+    {
+        return await _mediator.Send(createStudentCommand, cancellationToken);
+    }
+
     //[HttpPut("{id}")]
     //public async Task<IActionResult> UpdateStudent(int id, [FromBody] StudentUpdateDto studentUpdateDto)
     //{

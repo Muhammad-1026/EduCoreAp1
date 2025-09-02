@@ -3,6 +3,7 @@ using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Models;
 using FluentValidation;
+using MapsterMapper;
 using MediatR;
 
 namespace EduCoreApi.Application.Feature.Students.Commands;
@@ -46,23 +47,43 @@ public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStud
 
 internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, CreateStudentDto>
 {
-    private readonly IStudentRepository studentRepository;
+    private readonly IStudentRepository _studentRepository;
     private readonly IMediator _mediator;
     private readonly TimeProvider _timeProvider;
+    private readonly IMapper _mapper;
 
-    public CreateStudentCommandHandler(IStudentRe pository studentRepository, IMediator mediator, TimeProvider timeProvider)
+    public CreateStudentCommandHandler(IStudentRepository studentRepository, IMediator mediator, TimeProvider timeProvider, IMapper mapper)
     {
-        this.studentRepository = studentRepository;
+        _studentRepository = studentRepository;
         _mediator = mediator;
         _timeProvider = timeProvider;
+        _mapper = mapper;
     }
 
     public async Task<CreateStudentDto> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = new Student(request.FullName)
-        {
-            CreatedDate = _timeProvider.GetLocalNow().DateTime,
-        }
+        var student = new Student(
+            request.FullName,
+            request.BirthDate,
+            request.PhoneNumber,
+            request.Address,
+            request.IsDormitoryResident,
+            request.Gender,
+            request.GroupId,
+            request.SpecialityId,
+            request.IsActive,
+            createdBy: Guid.Empty
+        );
 
+        if (!string.IsNullOrWhiteSpace(request.Email))
+            student.SetEmail(request.Email);
+
+        if (!string.IsNullOrWhiteSpace(request.ImageUrl))
+            student.SetImageUrl(request.ImageUrl);
+
+        await _studentRepository.AddAsync(student, cancellationToken);
+        await _studentRepository.SaveChangesAsync(cancellationToken);
+
+        return _mapper.Map<CreateStudentDto>(student);
     }
 }

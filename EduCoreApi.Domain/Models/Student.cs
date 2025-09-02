@@ -13,7 +13,7 @@ public class Student : Entity
     public string? Email { get; private set; }
     public string PhoneNumber { get; private set; } = default!;
     public string Address { get; private set; } = default!;
-    public bool IsDormitoryResident { get; private set; }
+    public bool IsDormitoryResident { get; private set; } 
     public string? ImageUrl { get; private set; }
     public Gender Gender { get; private set; } = Gender.Unknown;
     public bool IsActive { get; private set; }
@@ -24,16 +24,27 @@ public class Student : Entity
     public Guid SpecialityId { get; private set; }
     public Speciality Speciality { get; private set; } = default!;
 
-    //TODO
-    //public List<Cour>
-
-    public Student(string fullName,DateTime birthDate,string phoneNumber,string address,Gender gender,Guid createdBy) : base(createdBy)
+    public Student(string fullName,
+        DateTime birthDate, 
+        string phoneNumber, 
+        string address, 
+        bool isDormitoryResident, 
+        Gender gender, 
+        Guid groupId,
+        Guid specialityId,
+        bool isActive,
+        Guid createdBy
+        ) : base(createdBy)
     {
         SetFullName(fullName);
         SetBirthDate(birthDate);
         SetPhoneNumber(phoneNumber);
         SetAddress(address);
+        SetIsDormitoryResident(isDormitoryResident);
         SetGender(gender);
+        SetGroupId(groupId);
+        SetSpecialityId(specialityId);
+        SetIsActive(isActive);
 
         IsActive = false;
     }
@@ -135,23 +146,30 @@ public class Student : Entity
         GroupId = groupId;
     }
 
-    public void Activate()
+    public void SetSpecialityId(Guid specialityId)
     {
-        if (GroupId == Guid.Empty)
-            throw new BussinessLogicException(StudentsErrors.CantActivateWithoutGroup);
+        if (specialityId == Guid.Empty)
+            throw new BussinessLogicException(StudentsErrors.GroupIdCantBeNull);
 
-        if (IsActive)
-            throw new BussinessLogicException(StudentsErrors.AlreadyActive);
-
-        IsActive = true;
+        SpecialityId = specialityId;
     }
 
-    public void Deactivate()
+    public void SetIsActive(bool isActive)
     {
-        if (!IsActive)
-            throw new BussinessLogicException(StudentsErrors.AlreadyInactive);
+        //// 1. Агар гуруҳга бириктирилмаган бўлса, актив/деактив қилиш мумкин эмас
+        //if (GroupId == Guid.Empty)
+        //    throw new BussinessLogicException(StudentsErrors.CantActivateWithoutGroup);
 
-        IsActive = false;
+        //// 2. Агар фаол қилишга уринса ва у аллақачон фаол бўлса
+        //if (isActive && IsActive)
+        //    throw new BussinessLogicException(StudentsErrors.AlreadyActive);
+
+        //// 3. Агар деактив қилишга уринса ва у аллақачон деактив бўлса
+        //if (!isActive && !IsActive)
+        //    throw new BussinessLogicException(StudentsErrors.AlreadyInactive);
+
+        // 4. Агар юқоридаги шартлар бузилмаса → қийматни ўзгартириш
+        IsActive = isActive;
     }
 
     public static class StudentsErrors

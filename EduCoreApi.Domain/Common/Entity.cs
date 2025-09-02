@@ -16,12 +16,16 @@ public abstract class Entity
     {
         Id = Guid.NewGuid();
         CreatedDate = DateTime.UtcNow;
-        CreatedBy = createdBy;
+
+        //TODO
+        CreatedBy = Guid.Parse("36aae2fe-248a-40b4-8523-01c5fa0e0bf5");
     }
 
     public void UpdateAudit(Guid updatedBy)
     {
         UpdatedDate = DateTime.UtcNow;
-        UpdatedBy = updatedBy;
+
+        //TODO
+        UpdatedBy = Guid.Parse("36aae2fe-248a-40b4-8523-01c5fa0e0bf5"); ;
     }
 }
