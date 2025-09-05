@@ -21,8 +21,6 @@ public class StudentsController : ControllerBase
     public async Task<List<GetStudentDto>> GetAll(CancellationToken cancellationToken = default)
     {
         return await _mediator.Send(new GetStudents(), cancellationToken);
-
-        //return Ok(students);
     }
 
     [HttpGet("{id}")]
@@ -36,29 +34,4 @@ public class StudentsController : ControllerBase
     {
         return await _mediator.Send(createStudentCommand, cancellationToken);
     }
-
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> UpdateStudent(int id, [FromBody] StudentUpdateDto studentUpdateDto)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return BadRequest(ModelState);
-    //    }
-    //    var updatedStudent = await _studentService.UpdateStudentAsync(id, studentUpdateDto);
-    //    if (updatedStudent == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(updatedStudent);
-    //}
-    //[HttpDelete("{id}")]
-    //public async Task<IActionResult> DeleteStudent(int id)
-    //{
-    //    var isDeleted = await _studentService.DeleteStudentAsync(id);
-    //    if (!isDeleted)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return NoContent();
-    //}
 }

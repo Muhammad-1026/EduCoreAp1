@@ -10,17 +10,20 @@ public static class ConfigureServices
     {
 
         var config = TypeAdapterConfig.GlobalSettings;
+
         config.Scan(typeof(ConfigureServices).Assembly); // IRegister имплементацияларни олади
+
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly));
+
         services.AddSingleton(config);                   // DI'га қўшиш
+
         services.AddScoped<IMapper, ServiceMapper>();    // IMapper service
 
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly));
 
         services.AddSingleton<TimeProvider>(TimeProvider.System);
-
 
         return services;
     }
