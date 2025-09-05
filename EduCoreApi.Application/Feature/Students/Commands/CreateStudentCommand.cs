@@ -10,6 +10,7 @@ namespace EduCoreApi.Application.Feature.Students.Commands;
 
 public sealed record CreateStudentCommand(string FullName,
     DateTime BirthDate,
+    int Age,
     string? Email,
     string PhoneNumber,
     string Address,
@@ -36,6 +37,8 @@ public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStud
             .NotEmpty();
         RuleFor(x => x.BirthDate)
             .NotEmpty();
+        RuleFor(x => x.Age)
+            .GreaterThan(0);
         RuleFor(x => x.PhoneNumber)
             .NotEmpty();
         RuleFor(x => x.Address)
@@ -65,6 +68,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
         var student = new Student(
             request.FullName,
             request.BirthDate,
+            request.Age,
             request.PhoneNumber,
             request.Address,
             request.IsDormitoryResident,
