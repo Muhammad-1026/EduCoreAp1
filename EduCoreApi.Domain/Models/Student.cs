@@ -10,6 +10,7 @@ public class Student : Entity
 {
     public string FullName { get; private set; } = default!;
     public DateTime BirthDate { get; private set; }
+    public int Age { get; private set; }
     public string? Email { get; private set; }
     public string PhoneNumber { get; private set; } = default!;
     public string Address { get; private set; } = default!;
@@ -26,6 +27,7 @@ public class Student : Entity
 
     public Student(string fullName,
         DateTime birthDate, 
+        int age,
         string phoneNumber, 
         string address, 
         bool isDormitoryResident, 
@@ -38,6 +40,7 @@ public class Student : Entity
     {
         SetFullName(fullName);
         SetBirthDate(birthDate);
+        SetAge(age);
         SetPhoneNumber(phoneNumber);
         SetAddress(address);
         SetIsDormitoryResident(isDormitoryResident);
@@ -66,6 +69,14 @@ public class Student : Entity
             throw new BussinessLogicException(StudentsErrors.BirthDateIsInvalid);
 
         BirthDate = birthDate;
+    }
+
+    public void SetAge(int age)
+    {
+        if (age < 10 || age > 100)
+            throw new BussinessLogicException(StudentsErrors.BirthDateIsInvalid);
+
+        Age = age;
     }
 
     public void SetEmail(string? email)

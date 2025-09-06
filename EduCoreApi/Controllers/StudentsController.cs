@@ -18,10 +18,16 @@ public class StudentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<GetStudentDto>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
     {
-        return await _mediator.Send(new GetStudents(), cancellationToken);
+        var response = await _mediator.Send(new GetStudents(), cancellationToken);
+
+        if (response.Code == 1)
+            return Ok(response); 
+        else
+            return NotFound(response); 
     }
+
 
     [HttpGet("{id}")]
     public async Task<GetStudentDto> GetById(Guid id, CancellationToken cancellationToken = default)

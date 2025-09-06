@@ -28,6 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseFileServer();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

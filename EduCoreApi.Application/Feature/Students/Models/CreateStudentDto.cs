@@ -6,6 +6,7 @@ public class CreateStudentDto
 {
     public string FullName { get; set; } = default!;
     public DateTime BirthDate { get; set; }
+    public int Age { get; set; }
     public string? Email { get; set; }
     public string PhoneNumber { get; set; } = default!;
     public string Address { get; set; } = default!;
