@@ -73,7 +73,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
             request.Address,
             request.IsDormitoryResident,
             request.Gender,
-            request.GroupId,
+            request.GroupId,    
             request.SpecialityId,
             request.IsActive,
             createdBy: Guid.Empty
