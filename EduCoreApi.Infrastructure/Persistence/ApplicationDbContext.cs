@@ -20,6 +20,8 @@ public class ApplicationDbContext : DbContext
     DbSet<Department> Departments { get; set; }
     DbSet<CourseTeacher> CourseTeachers { get; set; }
     DbSet<CourseSubject> CourseSubjects { get; set; }
+    DbSet<StudentDataFile> StudentDataFiles { get; set; }
+    DbSet<TeacherDataFile> TeacherDataFiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

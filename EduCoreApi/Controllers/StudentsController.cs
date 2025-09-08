@@ -23,9 +23,9 @@ public class StudentsController : ControllerBase
         var response = await _mediator.Send(new GetStudents(), cancellationToken);
 
         if (response.Code == 1)
-            return Ok(response); // 200 OK
+            return Ok(response); 
         else
-            return NotFound(response); // 404 Not Found
+            return NotFound(response); 
     }
 
 
@@ -40,29 +40,4 @@ public class StudentsController : ControllerBase
     {
         return await _mediator.Send(createStudentCommand, cancellationToken);
     }
-
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> UpdateStudent(int id, [FromBody] StudentUpdateDto studentUpdateDto)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return BadRequest(ModelState);
-    //    }
-    //    var updatedStudent = await _studentService.UpdateStudentAsync(id, studentUpdateDto);
-    //    if (updatedStudent == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(updatedStudent);
-    //}
-    //[HttpDelete("{id}")]
-    //public async Task<IActionResult> DeleteStudent(int id)
-    //{
-    //    var isDeleted = await _studentService.DeleteStudentAsync(id);
-    //    if (!isDeleted)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return NoContent();
-    //}
 }

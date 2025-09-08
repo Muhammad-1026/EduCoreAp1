@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // 1. DbContext'ни DI контейнерга қўшиш
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+options.UseNpgsql(connectionString));
+
 
 // 2. Custom extension services
 builder.Services.AddApplicationServices()
@@ -27,6 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseFileServer();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
