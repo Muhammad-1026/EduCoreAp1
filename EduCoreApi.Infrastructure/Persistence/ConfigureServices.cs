@@ -11,7 +11,6 @@ namespace EduCoreApi.Infrastructure.Persistence;
 
 public static class ConfigureServices
 {
-
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IStudentRepository, StudentRepository>();

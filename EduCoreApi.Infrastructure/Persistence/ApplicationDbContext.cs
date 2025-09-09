@@ -5,7 +5,6 @@ namespace EduCoreApi.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
-    // database.EnsureCreated();
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
     {
         Database.EnsureCreated();

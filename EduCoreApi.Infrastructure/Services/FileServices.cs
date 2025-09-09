@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace EduCoreApi.Infrastructure.Services;
 
-namespace EduCoreApi.Infrastructure.Services
+public class FileServices
 {
-    internal class FileServices
-    {
-    }
+
 }
