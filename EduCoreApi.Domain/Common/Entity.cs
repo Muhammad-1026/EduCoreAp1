@@ -26,6 +26,6 @@ public abstract class Entity
         UpdatedDate = DateTime.UtcNow;
 
         //TODO
-        UpdatedBy = Guid.Parse("36aae2fe-248a-40b4-8523-01c5fa0e0bf5"); ;
+        UpdatedBy = Guid.Parse("9cb48cb8-57af-4f0f-ba23-b70d9aada696"); ;
     }
 }

@@ -1,6 +1,9 @@
-﻿using EduCoreApi.Application.Common.Results;
+﻿using Ardalis.Specification;
+using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
+using EduCoreApi.Application.Common.Specifications;
 using EduCoreApi.Application.Feature.Departments.Models;
-using EduCoreApi.Application.Feature.Departments.Repositories;
+using EduCoreApi.Domain.Models;
 using MapsterMapper;
 using MediatR;
 
@@ -8,7 +11,7 @@ namespace EduCoreApi.Application.Feature.Departments.Queries;
 
 public sealed record GetDepartments : IRequest<ApiResponse<List<GetDepartmentDto>>>;
 
-interface sealed class GetDepartmentsHandler : IRequestHandler<GetDepartments, ApiResponse<List<GetDepartmentDto>>>
+internal sealed class GetDepartmentsHandler : IRequestHandler<GetDepartments, ApiResponse<List<GetDepartmentDto>>>
 {
     private readonly IDepartmentRepository _departmentRepository;
     private readonly IMapper _mapper;
@@ -19,20 +22,30 @@ interface sealed class GetDepartmentsHandler : IRequestHandler<GetDepartments, A
         _mapper = mapper;
     }
 
-    public Task<ApiResponse<List<GetDepartmentDto>>> Handle(GetDepartments request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<List<GetDepartmentDto>>> Handle(GetDepartments request, CancellationToken cancellationToken)
     {
-        try
-        {
+        var spec = new DbSpecifications<Department>();
+        spec.Query.AsNoTracking();
 
-        }
-        catch (Exception error)
+        var departments = await _departmentRepository.ListAsync(spec, cancellationToken);
+
+        if (departments == null)
         {
             return new ApiResponse<List<GetDepartmentDto>>
             {
-                Code = 0,
-                Message = $"Error: {error.Message}",
+                Code = 404,
+                Message = "No departments found",
                 Data = null
             };
-        }    
+        }
+
+        var departmentDto = _mapper.Map<List<GetDepartmentDto>>(departments);
+
+        return new ApiResponse<List<GetDepartmentDto>>
+        {
+            Code = 200,
+            Message = "Departments retrieved successfully",
+            Data = departmentDto
+        };
     }
-} 
+}

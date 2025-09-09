@@ -4,11 +4,11 @@ using EduCoreApi.Domain.Models;
 
 namespace EduCoreApi.Application.Feature.Departments.Specifications;
 
-public class DepartmentByIdSpecification : DbSpecifications<Department>
+public class DepartmentByIdSpec : DbSpecifications<Department>
 {
     public Guid DepartmentId { get; }
 
-    public DepartmentByIdSpecification(Guid departmentId, bool asNoTracking = false)
+    public DepartmentByIdSpec(Guid departmentId, bool asNoTracking = false)
     {
         DepartmentId = departmentId;
 

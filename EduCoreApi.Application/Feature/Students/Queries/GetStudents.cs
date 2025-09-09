@@ -40,7 +40,7 @@ internal sealed class GetStudentsHendler : IRequestHandler<GetStudents, ApiRespo
                 Data = studentDto
             };
         }
-        catch (Exception error)
+        catch (Exception error) 
         {
             return new ApiResponse<List<GetStudentDto>>
             {

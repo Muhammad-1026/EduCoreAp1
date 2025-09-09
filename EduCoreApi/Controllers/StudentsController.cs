@@ -1,4 +1,5 @@
-﻿using EduCoreApi.Application.Feature.Students.Commands;
+﻿using EduCoreApi.Application.Common.Results;
+using EduCoreApi.Application.Feature.Students.Commands;
 using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Application.Feature.Students.Queries;
 using MediatR;
@@ -29,11 +30,13 @@ public class StudentsController : ControllerBase
     }
 
 
-    [HttpGet("{id}")]
-    public async Task<GetStudentDto> GetById(Guid id, CancellationToken cancellationToken = default)
-    {
-        return await _mediator.Send(new GetStudentByIdQuery(id), cancellationToken);
-    }
+    //[HttpGet("{id:Guid}")]
+    //public async Task<GetStudentDto> GetById(Guid id, CancellationToken cancellationToken = default)
+    //{
+    //    var response = await _mediator.Send(new GetStudentById(id), cancellationToken);
+
+    //    return response;
+    //}
 
     [HttpPost]
     public async Task<CreateStudentDto> Create([FromBody] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)

@@ -9,6 +9,5 @@ internal sealed class DepartmentRepository : RepositoryBase<Department>, IDepart
 {
     public DepartmentRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-
     }
 }

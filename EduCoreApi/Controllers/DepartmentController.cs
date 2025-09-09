@@ -1,5 +1,7 @@
-﻿using EduCoreApi.Application.Feature.Departments.Commands;
+﻿using EduCoreApi.Application.Common.Results;
+using EduCoreApi.Application.Feature.Departments.Commands;
 using EduCoreApi.Application.Feature.Departments.Models;
+using EduCoreApi.Application.Feature.Departments.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +17,68 @@ namespace EduCoreApi.API.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetDepartments(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
-            return Ok();
+            var response = await _mediator.Send(new GetDepartments(), cancellationToken);
+
+            if (response.Code == 200)
+                return Ok(response);
+            else
+                return NotFound(response);
+        }
+
+        [HttpGet("{id:Guid}")]
+        public async Task<ApiResponse<GetDepartmentDto>> GetById(Guid id, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetDepartmentById(id), cancellationToken);
+
+            if (response.Code == 200) 
+            {   
+                return response;
+            }
+            else
+            {
+                return response;
+            }
         }
 
         [HttpPost]
-        public async Task<CreateDepartmentDto> Create([FromBody] CreateDepartmentCommand createDepartmentCommand, CancellationToken cancellationToken)
+        public async Task<CreateDepartmentDto> Create([FromBody] CreateDepartmentCommand createDepartmentCommand, CancellationToken cancellationToken = default)
         {
             return await _mediator.Send(createDepartmentCommand, cancellationToken);
+        }
+
+        [HttpPut("{id:Guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)
+        {
+            if (id != updateDepartmentCommand.DepartmentId)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Code = 400,
+                    Message = "Mismatched Department ID"
+                });
+            }
+
+            var response = await _mediator.Send(updateDepartmentCommand, cancellationToken);
+
+            if (response.Code == 200)
+                return Ok(response);
+            else
+                return NotFound(response);
+        }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new DeleteDepartmentCommand(id), cancellationToken);
+
+            if (response.Code == 1)
+                return Ok(response);
+            else
+                return NotFound(response);
         }
     }
 }

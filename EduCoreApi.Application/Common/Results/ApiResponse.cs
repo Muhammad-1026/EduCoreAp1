@@ -6,3 +6,9 @@ public class ApiResponse<T>
     public string Message { get; set; } = default!;
     public T? Data { get; set; }
 }
+
+public class ApiResponse
+{
+    public int Code { get; set; }
+    public string Message { get; set; } = default!;
+}

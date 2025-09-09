@@ -1,4 +1,5 @@
 ﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Application.Feature.Students.Specifications;
 using EduCoreApi.Shared.Exeptions;
@@ -8,9 +9,9 @@ using MediatR;
 
 namespace EduCoreApi.Application.Feature.Students.Queries;
 
-public sealed record GetStudentByIdQuery(Guid StudentId) : IRequest<GetStudentDto>;
+public sealed record GetStudentById(Guid StudentId) : IRequest<ApiResponse<GetStudentDto>>;
 
-public sealed class GetStudentByIdValidator : AbstractValidator<GetStudentByIdQuery>
+public sealed class GetStudentByIdValidator : AbstractValidator<GetStudentById>
 {
     public GetStudentByIdValidator()
     {
@@ -18,7 +19,7 @@ public sealed class GetStudentByIdValidator : AbstractValidator<GetStudentByIdQu
     }
 }
 
-internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentByIdQuery, GetStudentDto>
+internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, ApiResponse<GetStudentDto>>
 {
     private readonly IStudentRepository _studentRepository;
     private readonly IMapper _mapper;
@@ -29,13 +30,13 @@ internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentByIdQuer
         _mapper = mapper;
     }
 
-    public async Task<GetStudentDto> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetStudentDto>> Handle(GetStudentById request, CancellationToken cancellationToken)
     {
         var spec = new StudentByIdSpec(request.StudentId, asNoTracking: true);
 
         var student = await _studentRepository.FirstOrDefaultAsync(spec, cancellationToken) 
             ?? throw new ResourceNotFoundException(StudentError.NotFound);
 
-        return _mapper.Map<GetStudentDto>(student);
+        return _mapper.Map<ApiResponse<GetStudentDto>>(student);
     }
 }
