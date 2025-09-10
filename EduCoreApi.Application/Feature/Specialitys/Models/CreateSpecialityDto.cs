@@ -2,9 +2,9 @@
 
 public class CreateSpecialityDto
 {
-    public required string Name { get; set; }
-    public required string Code { get; set; }
+    public  string Name { get; set; } = default!;
+    public  string Code { get; set; } = default!;
     public string? Description { get; set; }
 
-    public Guid DepartmentId { get; set; }
+    public required Guid DepartmentId { get; set; }
 }

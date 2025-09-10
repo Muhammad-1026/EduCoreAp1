@@ -35,13 +35,10 @@ namespace EduCoreApi.API.Controllers
             var response = await _mediator.Send(new GetDepartmentById(id), cancellationToken);
 
             if (response.Code == 200) 
-            {   
                 return response;
-            }
             else
-            {
                 return response;
-            }
+            
         }
 
         [HttpPost]
@@ -50,32 +47,37 @@ namespace EduCoreApi.API.Controllers
             return await _mediator.Send(createDepartmentCommand, cancellationToken);
         }
 
-        [HttpPut("{id:Guid}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)
-        {
-            if (id != updateDepartmentCommand.DepartmentId)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    Code = 400,
-                    Message = "Mismatched Department ID"
-                });
-            }
+        //[HttpPut("{id:Guid}")]
+        //public async Task<ApiResponse<UpdateDepartmentDto>> Update(Guid id, [FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)
+        //{
+        //    if (id != updateDepartmentCommand.DepartmentId)
+        //    {
+        //        return new ApiResponse<UpdateDepartmentDto>
+        //        {
+        //            Code = 400,
+        //            Message = "ID in the URL does not match ID in the body",
+        //            Data = null
+        //        };
+        //    }
 
-            var response = await _mediator.Send(updateDepartmentCommand, cancellationToken);
+        //    var response = await _mediator.Send(updateDepartmentCommand, cancellationToken);
 
-            if (response.Code == 200)
-                return Ok(response);
-            else
-                return NotFound(response);
-        }
+        //    if (response.Code == 200) 
+        //    {
+        //        return response;
+        //    }
+        //    else
+        //    {
+        //        return response;
+        //    }
+        //}
 
         [HttpDelete("{id:Guid}")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new DeleteDepartmentCommand(id), cancellationToken);
 
-            if (response.Code == 1)
+            if (response.Code == 200)
                 return Ok(response);
             else
                 return NotFound(response);

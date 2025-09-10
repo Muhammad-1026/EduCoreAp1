@@ -33,7 +33,7 @@ internal sealed class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDep
         {
             return new ApiResponse
             {
-                Code = 0,
+                Code = 404,
                 Message = "Department not found"
             };
         }
@@ -43,7 +43,7 @@ internal sealed class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDep
 
         return new ApiResponse
         {
-            Code = 1,
+            Code = 200,
             Message = "Department deleted successfully",
         };
     }

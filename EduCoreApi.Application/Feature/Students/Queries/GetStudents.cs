@@ -1,9 +1,9 @@
-﻿using Ardalis.Specification;
+﻿using EduCoreApi.Application.Feature.Students.Models;
+using EduCoreApi.Application.Common.Specifications;
 using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Common.Specifications;
-using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Domain.Models;
+using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
 
@@ -24,31 +24,28 @@ internal sealed class GetStudentsHendler : IRequestHandler<GetStudents, ApiRespo
 
     public async Task<ApiResponse<List<GetStudentDto>>> Handle(GetStudents request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var spec = new DbSpecifications<Student>();
-            spec.Query.AsNoTracking();
+        var spec = new DbSpecifications<Student>();
+        spec.Query.AsNoTracking();
 
-            var students = await _studentRepository.ListAsync(spec, cancellationToken);
+        var students = await _studentRepository.ListAsync(spec, cancellationToken);
 
-            var studentDto = _mapper.Map<List<GetStudentDto>>(students);
-
-            return new ApiResponse<List<GetStudentDto>>
-            {
-                Code = 1,
-                Message = "Students retrieved successfully",
-                Data = studentDto
-            };
-        }
-        catch (Exception error) 
+        if (students == null)
         {
             return new ApiResponse<List<GetStudentDto>>
             {
-                Code = 0,
-                Message = $"Error: {error.Message}",
+                Code = 404,
+                Message = "No students found",
                 Data = null
             };
         }
-    }
 
+        var studentDto = _mapper.Map<List<GetStudentDto>>(students);
+
+        return new ApiResponse<List<GetStudentDto>>
+        {
+            Code = 200,
+            Message = "Students retrieved successfully",
+            Data = studentDto
+        };
+    }
 }

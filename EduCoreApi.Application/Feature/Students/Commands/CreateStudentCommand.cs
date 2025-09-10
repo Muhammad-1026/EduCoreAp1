@@ -51,15 +51,11 @@ public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStud
 internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, CreateStudentDto>
 {
     private readonly IStudentRepository _studentRepository;
-    private readonly IMediator _mediator;
-    private readonly TimeProvider _timeProvider;
     private readonly IMapper _mapper;
 
-    public CreateStudentCommandHandler(IStudentRepository studentRepository, IMediator mediator, TimeProvider timeProvider, IMapper mapper)
+    public CreateStudentCommandHandler(IStudentRepository studentRepository, IMapper mapper)
     {
         _studentRepository = studentRepository;
-        _mediator = mediator;
-        _timeProvider = timeProvider;
         _mapper = mapper;
     }
 
@@ -73,7 +69,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
             request.Address,
             request.IsDormitoryResident,
             request.Gender,
-            request.GroupId,    
+            request.GroupId,
             request.SpecialityId,
             request.IsActive,
             createdBy: Guid.Empty
@@ -83,7 +79,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
             student.SetEmail(request.Email);
 
         if (!string.IsNullOrWhiteSpace(request.ImageUrl))
-            student.SetImageUrl(request.ImageUrl);
+            student.SetImageUrl(request.ImageUrl); 
 
         await _studentRepository.AddAsync(student, cancellationToken);
         await _studentRepository.SaveChangesAsync(cancellationToken);

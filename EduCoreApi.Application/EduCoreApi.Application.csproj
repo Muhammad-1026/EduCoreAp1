@@ -23,9 +23,6 @@
     <Folder Include="Feature\Groups\Commands\" />
     <Folder Include="Feature\Groups\Queries\" />
     <Folder Include="Feature\Groups\Specifications\" />
-    <Folder Include="Feature\Specialitys\Commands\" />
-    <Folder Include="Feature\Specialitys\Queries\" />
-    <Folder Include="Feature\Specialitys\Specifications\" />
     <Folder Include="Feature\Subjects\Commands\" />
     <Folder Include="Feature\Subjects\Queries\" />
     <Folder Include="Feature\Subjects\Specifications\" />

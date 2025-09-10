@@ -35,8 +35,25 @@ internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, Ap
         var spec = new StudentByIdSpec(request.StudentId, asNoTracking: true);
 
         var student = await _studentRepository.FirstOrDefaultAsync(spec, cancellationToken) 
-            ?? throw new ResourceNotFoundException(StudentError.NotFound);
+        
+        if (student == null)
+        {
+            return new ApiResponse<GetStudentDto>
+            {
+                Code = 404,
+                Message = "Student not found",
+                Data = null
+            };
+        }
 
-        return _mapper.Map<ApiResponse<GetStudentDto>>(student);
+
+        var speciality = _mapper.Map<ApiResponse<GetStudentDto>>(student);
+
+        return new ApiResponse<GetStudentDto>
+        {
+            Code = 200,
+            Message = "retrieved successfully",
+            Data = speciality.Data
+        };
     }
 }
