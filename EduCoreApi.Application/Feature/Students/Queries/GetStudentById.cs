@@ -34,7 +34,7 @@ internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, Ap
     {
         var spec = new StudentByIdSpec(request.StudentId, asNoTracking: true);
 
-        var student = await _studentRepository.FirstOrDefaultAsync(spec, cancellationToken) 
+        var student = await _studentRepository.FirstOrDefaultAsync(spec, cancellationToken);
         
         if (student == null)
         {

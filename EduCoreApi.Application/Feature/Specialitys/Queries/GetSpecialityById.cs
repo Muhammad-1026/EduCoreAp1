@@ -1,7 +1,7 @@
-﻿using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Feature.Speciality.Models;
+﻿using EduCoreApi.Application.Feature.Specialitys.Specifications;
 using EduCoreApi.Application.Feature.Specialitys.Repositories;
-using EduCoreApi.Application.Feature.Specialitys.Specifications;
+using EduCoreApi.Application.Feature.Speciality.Models;
+using EduCoreApi.Application.Common.Results;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;

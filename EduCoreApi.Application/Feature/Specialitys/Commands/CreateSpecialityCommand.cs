@@ -21,23 +21,23 @@ public sealed class CreateSpecialityCommandValidator : AbstractValidator<CreateS
     }
 }
 
-internal sealed class CreateSpecialityCommandHandler : IRequestHandler<CreateSpecialityCommand, CreateSpecialityDto>
-{
-    // Implementation of the handler would go here
-    public async Task<CreateSpecialityDto> Handle(CreateSpecialityCommand request, CancellationToken cancellationToken)
-    {
-        var speciality = new CreateSpecialityDto
-        {
-            Name = request.Name,
-            Code = request.Code,
-            DepartmentId = request.DepartmentId,
-        };
+//internal sealed class CreateSpecialityCommandHandler : IRequestHandler<CreateSpecialityCommand, CreateSpecialityDto>
+//{
+//    // Implementation of the handler would go here
+//    public async Task<CreateSpecialityDto> Handle(CreateSpecialityCommand request, CancellationToken cancellationToken)
+//    {
+//        var speciality = new CreateSpecialityDto
+//        {
+//            Name = request.Name,
+//            Code = request.Code,
+//            DepartmentId = request.DepartmentId,
+//        };
 
-        if (!string.IsNullOrWhiteSpace(request.Description))
-        {
-            speciality.SetDescription(request.Description);
+//        if (!string.IsNullOrWhiteSpace(request.Description))
+//        {
+//            speciality.SetDescription(request.Description);
 
 
 
-        }
-}
+//        }
+//}
