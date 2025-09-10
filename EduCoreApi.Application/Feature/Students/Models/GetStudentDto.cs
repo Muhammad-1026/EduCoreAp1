@@ -1,5 +1,5 @@
 ﻿using EduCoreApi.Application.Feature.Groups.Models;
-using EduCoreApi.Application.Feature.Speciality.Models;
+using EduCoreApi.Application.Feature.Specialities.Models;
 using EduCoreApi.Shared.Models;
 
 namespace EduCoreApi.Application.Feature.Students.Models;

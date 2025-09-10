@@ -7,7 +7,7 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
     {
-        Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     DbSet<Student> Students { get; set; }

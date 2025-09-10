@@ -1,4 +1,4 @@
-﻿namespace EduCoreApi.Application.Feature.Speciality.Models;
+﻿namespace EduCoreApi.Application.Feature.Specialities.Models;
 
 public class GetSpecialityDto
 {

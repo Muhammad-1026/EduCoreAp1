@@ -79,7 +79,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
             student.SetEmail(request.Email);
 
         if (!string.IsNullOrWhiteSpace(request.ImageUrl))
-            student.SetImageUrl(request.ImageUrl); 
+            student.SetImageUrl(request.ImageUrl);
 
         await _studentRepository.AddAsync(student, cancellationToken);
         await _studentRepository.SaveChangesAsync(cancellationToken);

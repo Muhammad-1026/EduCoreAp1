@@ -1,7 +1,7 @@
 ﻿using EduCoreApi.Application.Feature.Courses.Models;
 using EduCoreApi.Application.Feature.Departments.Models;
 using EduCoreApi.Application.Feature.Groups.Models;
-using EduCoreApi.Application.Feature.Speciality.Models;
+using EduCoreApi.Application.Feature.Specialities.Models;
 using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Application.Feature.Subjects.Models;
 using EduCoreApi.Application.Feature.Teachers.Models;

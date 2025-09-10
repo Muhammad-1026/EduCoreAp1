@@ -244,6 +244,9 @@ namespace EduCoreApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -295,6 +298,35 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.HasIndex("SpecialityId");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("EduCoreApi.Domain.Models.StudentDataFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudentDataFiles");
                 });
 
             modelBuilder.Entity("EduCoreApi.Domain.Models.Subject", b =>
@@ -380,6 +412,35 @@ namespace EduCoreApi.Infrastructure.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("EduCoreApi.Domain.Models.TeacherDataFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeacherDataFiles");
                 });
 
             modelBuilder.Entity("TimeTable", b =>
