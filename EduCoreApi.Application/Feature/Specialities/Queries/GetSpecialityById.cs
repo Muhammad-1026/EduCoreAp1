@@ -2,6 +2,7 @@
 using EduCoreApi.Application.Feature.Specialities.Models;
 using EduCoreApi.Application.Feature.Specialitys.Repositories;
 using EduCoreApi.Application.Feature.Specialitys.Specifications;
+using Ardalis.Specification;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
@@ -27,9 +28,15 @@ internal sealed class GetSpecialityByIdHendler : IRequestHandler<GetSpecialityBy
         _specialityRepository = specialityRepository;
         _mapper = mapper;
     }
+
     public async Task<ApiResponse<GetSpecialityDto>> Handle(GetSpecialityById request, CancellationToken cancellationToken)
     {
         var spec = new SpecialityByIdSpec(request.SpecialityId, asNoTracking: true);
+        spec
+            .Query
+            .AsNoTracking()
+            .Include(s => s.Department);
+
         var speciality = await _specialityRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (speciality == null)
@@ -42,13 +49,13 @@ internal sealed class GetSpecialityByIdHendler : IRequestHandler<GetSpecialityBy
             };
         }
 
-        var a = _mapper.Map<ApiResponse<GetSpecialityDto>>(speciality);
+        var specialityDto = _mapper.Map<GetSpecialityDto>(speciality);
 
         return new ApiResponse<GetSpecialityDto>
         {
             Code = 200,
             Message = "Speciality retrieved successfully",
-            Data = a.Data
+            Data = specialityDto
         };
     }
 }

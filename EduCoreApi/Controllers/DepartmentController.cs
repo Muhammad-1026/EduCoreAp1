@@ -47,7 +47,7 @@ namespace EduCoreApi.API.Controllers
             return await _mediator.Send(createDepartmentCommand, cancellationToken);
         }
 
-        [HttpPut("{id:Guid}")]
+        [HttpPut]
         public async Task<ApiResponse<Guid>> Update( [FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)
         {
             if (updateDepartmentCommand.DepartmentId != updateDepartmentCommand.DepartmentId)
