@@ -26,8 +26,6 @@
     <Folder Include="Feature\Subjects\Commands\" />
     <Folder Include="Feature\Subjects\Queries\" />
     <Folder Include="Feature\Subjects\Specifications\" />
-    <Folder Include="Feature\Teachers\Commands\" />
-    <Folder Include="Feature\Teachers\Queries\" />
     <Folder Include="Feature\Teachers\Specifications\" />
     <Folder Include="Feature\TimeTables\Commands\" />
     <Folder Include="Feature\TimeTables\Queries\" />

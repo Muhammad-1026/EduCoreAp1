@@ -21,7 +21,7 @@ public class Teacher : Entity
 
     public List<CourseTeacher> CourseTeachers { get; private set; } = new();
 
-    public Teacher(string fullName, DateTime birthDate, string phoneNumber, string address, Gender gender, bool isActive, Guid createdBy) : base(createdBy)
+    public Teacher(string fullName, DateTime birthDate, string phoneNumber, string address, Gender gender, bool isActive, Guid departmentId, Guid createdBy) : base(createdBy)
     {
         SetFullName(fullName);
         SetBirthDate(birthDate);
@@ -29,6 +29,7 @@ public class Teacher : Entity
         SetAddress(address);
         SetGender(gender);
         SetIsActive(isActive);
+        SetDepartmentId(departmentId);
     }
 
     public void SetFullName(string fullName)
@@ -82,6 +83,14 @@ public class Teacher : Entity
         Address = address;
     }
 
+    public void SetImageURL(string imageURL)
+    {
+        if (string.IsNullOrWhiteSpace(imageURL))
+            throw new BussinessLogicException(TeacherErrors.ImageURLInvalid);
+
+        ImageUrl = imageURL;
+    }
+
     public void SetGender(Gender gender)
     {
         if (!Enum.IsDefined(typeof(Gender), gender) || gender == Gender.Unknown)
@@ -93,6 +102,14 @@ public class Teacher : Entity
     public void SetIsActive(bool isActive)
     {
         IsActive = isActive;
+    }
+
+    public void SetDepartmentId(Guid departmentId)
+    {
+        if (!string.IsNullOrEmpty(departmentId.ToString()))
+            throw new BussinessLogicException(TeacherErrors.DepDepartmentIdInvalid);
+
+        DepartmentId = departmentId;
     }
 
     public class TeacherErrors
@@ -122,9 +139,19 @@ public class Teacher : Entity
             "Адрес обязателен."
         );
 
+        public static readonly Error ImageURLInvalid = new(
+            "Teacher.ImageURLInvalid",
+            "Имеж не может бит null"
+        );
+
         public static readonly Error GenderIsInvalid = new(
            "Teacher.GenderIsInvalid",
            "Указан недопустимый пол."
-       );
+        );
+
+        public static readonly Error DepDepartmentIdInvalid = new(
+            "Teacher.DepartmentId",
+            "Не может би нул"
+        );
     }
 }
