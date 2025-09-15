@@ -1,5 +1,5 @@
-﻿using EduCoreApi.Application.Common.Repositories;
-using EduCoreApi.Application.Feature.Departments.Models;
+﻿using EduCoreApi.Application.Feature.Departments.Models;
+using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Domain.Models;
 using FluentValidation;
 using MapsterMapper;

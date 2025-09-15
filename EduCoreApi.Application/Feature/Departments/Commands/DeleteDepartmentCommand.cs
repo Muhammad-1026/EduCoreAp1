@@ -12,7 +12,8 @@ public sealed class DeleteDepartmentCommandValidator : AbstractValidator<DeleteD
 {
     public DeleteDepartmentCommandValidator()
     {
-        RuleFor(x => x.DepartmentId).GreaterThan(Guid.Empty);
+        RuleFor(x => x.DepartmentId)
+            .GreaterThan(Guid.Empty);
     }
 }
 

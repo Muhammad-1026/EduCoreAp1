@@ -1,9 +1,9 @@
-﻿using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Feature.Departments.Commands;
+﻿using EduCoreApi.Application.Feature.Departments.Commands;
 using EduCoreApi.Application.Feature.Departments.Models;
 using EduCoreApi.Application.Feature.Departments.Queries;
-using MediatR;
+using EduCoreApi.Application.Common.Results;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
 
 namespace EduCoreApi.API.Controllers
 {
@@ -34,11 +34,11 @@ namespace EduCoreApi.API.Controllers
         {
             var response = await _mediator.Send(new GetDepartmentById(id), cancellationToken);
 
-            if (response.Code == 200) 
+            if (response.Code == 200)
                 return response;
             else
                 return response;
-            
+
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace EduCoreApi.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ApiResponse<Guid>> Update( [FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> Update([FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)
         {
             if (updateDepartmentCommand.DepartmentId != updateDepartmentCommand.DepartmentId)
             {

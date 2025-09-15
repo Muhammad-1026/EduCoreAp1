@@ -1,14 +1,14 @@
-﻿using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Feature.Teachers.Models;
+﻿using EduCoreApi.Application.Feature.Teachers.Specifications;
 using EduCoreApi.Application.Feature.Teachers.Repositories;
-using EduCoreApi.Application.Feature.Teachers.Specifications;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Shared.Models;
 using FluentValidation;
 using MediatR;
 
 namespace EduCoreApi.Application.Feature.Teachers.Commands;
 
-public sealed record UpdateTeacherCommand(string FullName,
+public sealed record UpdateTeacherCommand(Guid TeacherId,
+    string FullName,
     DateTime BirthDate,
     string PhoneNumber,
     string Address,

@@ -1,7 +1,7 @@
-﻿using EduCoreApi.Application.Common.Repositories;
-using EduCoreApi.Application.Common.Results;
+﻿using EduCoreApi.Application.Feature.Departments.Specifications;
 using EduCoreApi.Application.Feature.Departments.Models;
-using EduCoreApi.Application.Feature.Departments.Specifications;
+using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
@@ -41,7 +41,6 @@ internal sealed class GetByIdDepartmentHandler : IRequestHandler<GetDepartmentBy
             {
                 Code = 404,
                 Message = "Department not found",
-                Data = null
             };
         }
 

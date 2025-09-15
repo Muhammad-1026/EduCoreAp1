@@ -1,9 +1,9 @@
-﻿using Ardalis.Specification;
+﻿using EduCoreApi.Application.Feature.Departments.Models;
+using EduCoreApi.Application.Common.Specifications;
 using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Common.Specifications;
-using EduCoreApi.Application.Feature.Departments.Models;
 using EduCoreApi.Domain.Models;
+using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
 
@@ -34,8 +34,7 @@ internal sealed class GetDepartmentsHandler : IRequestHandler<GetDepartments, Ap
             return new ApiResponse<List<GetDepartmentDto>>
             {
                 Code = 404,
-                Message = "No departments found",
-                Data = null
+                Message = "Departments no found"
             };
         }
 

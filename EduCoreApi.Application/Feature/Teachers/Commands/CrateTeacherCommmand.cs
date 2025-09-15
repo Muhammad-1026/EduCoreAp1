@@ -1,6 +1,6 @@
-﻿using EduCoreApi.Application.Common.Results;
+﻿using EduCoreApi.Application.Feature.Teachers.Repositories;
 using EduCoreApi.Application.Feature.Teachers.Models;
-using EduCoreApi.Application.Feature.Teachers.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Models;
 using FluentValidation;
@@ -9,14 +9,14 @@ using MediatR;
 
 namespace EduCoreApi.Application.Feature.Teachers.Commands;
 
-public sealed record CreateTeacherCommmand(string FullName, 
-    DateTime BirthDate, 
-    string PhoneNumber, 
-    string Address, 
-    Gender Gender, 
+public sealed record CreateTeacherCommmand(string FullName,
+    DateTime BirthDate,
+    string PhoneNumber,
+    string Address,
+    Gender Gender,
     bool IsActive,
     Guid DepartmentId,
-    string ImageURL) 
+    string ImageURL)
     : IRequest<ApiResponse<CreateTeacherDto>>;
 
 public sealed class CreateTeacherCommmandValidator : AbstractValidator<CreateTeacherCommmand>
@@ -35,10 +35,10 @@ public sealed class CreateTeacherCommmandValidator : AbstractValidator<CreateTea
             .NotEmpty();
         RuleFor(x => x.IsActive)
             .NotEmpty();
-        RuleFor(x => x.DepartmentId)
-            .NotEmpty();
-        RuleFor(x => x.ImageURL)
-            .NotEmpty();
+        //RuleFor(x => x.DepartmentId)
+        //    .NotEmpty();
+        //RuleFor(x => x.ImageURL)
+        //    .NotEmpty();
     }
 }
 
@@ -67,7 +67,7 @@ internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeache
         );
 
         if (!string.IsNullOrWhiteSpace(request.ImageURL))
-            teacher.SetImageURL(request.ImageURL);  
+            teacher.SetImageURL(request.ImageURL);
 
         await _teacherRepository.AddAsync(teacher);
         await _teacherRepository.SaveChangesAsync(cancellationToken);
@@ -76,7 +76,7 @@ internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeache
 
         return new ApiResponse<CreateTeacherDto>
         {
-            Code = 200,
+            Code = 201,
             Message = "",
             Data = teacherDto
         };
