@@ -72,11 +72,13 @@ internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeache
         await _teacherRepository.AddAsync(teacher);
         await _teacherRepository.SaveChangesAsync(cancellationToken);
 
-        return new ApiResponse
+        var teacherDto = _mapper.Map<CreateTeacherDto>(teacher);
+
+        return new ApiResponse<CreateTeacherDto>
         {
             Code = 200,
             Message = "",
-            Data = 
-        }
+            Data = teacherDto
+        };
     }
 }
