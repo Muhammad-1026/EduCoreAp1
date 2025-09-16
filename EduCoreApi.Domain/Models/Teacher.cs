@@ -106,8 +106,8 @@ public class Teacher : Entity
 
     public void SetDepartmentId(Guid departmentId)
     {
-        if (!string.IsNullOrEmpty(departmentId.ToString()))
-            throw new BussinessLogicException(TeacherErrors.DepDepartmentIdInvalid);
+        if (departmentId == Guid.Empty)
+            throw new BussinessLogicException(TeacherErrors.DepartmentIdInvalid);
 
         DepartmentId = departmentId;
     }
@@ -149,9 +149,9 @@ public class Teacher : Entity
            "Указан недопустимый пол."
         );
 
-        public static readonly Error DepDepartmentIdInvalid = new(
+        public static readonly Error DepartmentIdInvalid = new(
             "Teacher.DepartmentId",
-            "Не может би нул"
+            "DepartmentId не может быть пустым" 
         );
     }
 }

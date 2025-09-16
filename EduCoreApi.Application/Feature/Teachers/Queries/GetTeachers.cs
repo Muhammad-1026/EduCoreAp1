@@ -1,9 +1,9 @@
-﻿using Ardalis.Specification;
-using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Common.Specifications;
+﻿using EduCoreApi.Application.Feature.Teachers.Repositories;
 using EduCoreApi.Application.Feature.Teachers.Models;
-using EduCoreApi.Application.Feature.Teachers.Repositories;
+using EduCoreApi.Application.Common.Specifications;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Domain.Models;
+using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
 
@@ -25,6 +25,7 @@ internal sealed class GetTeachersHandler : IRequestHandler<GetTeachers, ApiRespo
     public async Task<ApiResponse<List<GetTeacherDto>>> Handle(GetTeachers request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Teacher>();
+        spec.Query.Where(t => t.IsActive);
         spec.Query.AsNoTracking();
 
         var teachers = await _teacherRepository.ListAsync(spec, cancellationToken);

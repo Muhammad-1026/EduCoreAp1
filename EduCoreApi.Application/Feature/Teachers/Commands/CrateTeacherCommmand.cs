@@ -16,7 +16,8 @@ public sealed record CreateTeacherCommmand(string FullName,
     Gender Gender,
     bool IsActive,
     Guid DepartmentId,
-    string ImageURL)
+    string ImageURL,
+    string Email)
     : IRequest<ApiResponse<CreateTeacherDto>>;
 
 public sealed class CreateTeacherCommmandValidator : AbstractValidator<CreateTeacherCommmand>
@@ -35,10 +36,12 @@ public sealed class CreateTeacherCommmandValidator : AbstractValidator<CreateTea
             .NotEmpty();
         RuleFor(x => x.IsActive)
             .NotEmpty();
-        //RuleFor(x => x.DepartmentId)
-        //    .NotEmpty();
-        //RuleFor(x => x.ImageURL)
-        //    .NotEmpty();
+        RuleFor(x => x.DepartmentId)
+            .NotEmpty();
+        RuleFor(x => x.ImageURL)
+            .NotEmpty();
+        RuleFor(x => x.Email)
+            .EmailAddress();
     }
 }
 
@@ -69,6 +72,9 @@ internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeache
         if (!string.IsNullOrWhiteSpace(request.ImageURL))
             teacher.SetImageURL(request.ImageURL);
 
+        if (!string.IsNullOrWhiteSpace(request.Email))
+            teacher.SetEmail(request.Email);
+
         await _teacherRepository.AddAsync(teacher);
         await _teacherRepository.SaveChangesAsync(cancellationToken);
 
@@ -77,7 +83,7 @@ internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeache
         return new ApiResponse<CreateTeacherDto>
         {
             Code = 201,
-            Message = "",
+            Message = " ",
             Data = teacherDto
         };
     }
