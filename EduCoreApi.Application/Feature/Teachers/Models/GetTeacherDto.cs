@@ -4,7 +4,7 @@ namespace EduCoreApi.Application.Feature.Teachers.Models;
 
 public class GetTeacherDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string FullName { get; set; } = default!;
     public DateTime BirthDate { get; set; }
     public string? Email { get; set; }

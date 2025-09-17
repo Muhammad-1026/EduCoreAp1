@@ -37,13 +37,15 @@ internal sealed class DeleteTeacherCommandHandler : IRequestHandler<DeleteTeache
                 Message = "Teacher not found",
             };
 
-        await _teacherRepository.DeleteAsync(teacher);
+        teacher.SetIsActive(false);
+
+        await _teacherRepository.UpdateAsync(teacher);
         await _teacherRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {
             Code = 200,
-            Message = "Teacher deleted successfully",
+            Message = "Teacher deactivated successfully.",
         };
     }
 }

@@ -6,6 +6,7 @@ using EduCoreApi.Domain.Models;
 using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace EduCoreApi.Application.Feature.Teachers.Queries;
 
@@ -25,8 +26,11 @@ internal sealed class GetTeachersHandler : IRequestHandler<GetTeachers, ApiRespo
     public async Task<ApiResponse<List<GetTeacherDto>>> Handle(GetTeachers request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Teacher>();
-        spec.Query.Where(t => t.IsActive);
-        spec.Query.AsNoTracking();
+
+        spec.Query
+            .Where(t => t.IsActive)
+            .Include(s => s.Department)
+            .AsNoTracking();
 
         var teachers = await _teacherRepository.ListAsync(spec, cancellationToken);
 

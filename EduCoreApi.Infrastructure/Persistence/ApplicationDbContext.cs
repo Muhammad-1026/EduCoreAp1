@@ -22,8 +22,8 @@ public class ApplicationDbContext : DbContext
     DbSet<StudentDataFile> StudentDataFiles { get; set; }
     DbSet<TeacherDataFile> TeacherDataFiles { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-    }
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    //}
 }
