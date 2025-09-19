@@ -1,5 +1,6 @@
 ﻿using EduCoreApi.Application.Feature.Departments.Models;
 using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Domain.Models;
 using FluentValidation;
 using MapsterMapper;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace EduCoreApi.Application.Feature.Departments.Commands;
 
-public sealed record CreateDepartmentCommand(string Name, string? Description) : IRequest<CreateDepartmentDto>;
+public sealed record CreateDepartmentCommand(string Name, string? Description) : IRequest<ApiResponse<CreateDepartmentDto>>;
 
 public sealed class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartmentCommand>
 {
@@ -22,26 +23,42 @@ public sealed class CreateDepartmentCommandValidator : AbstractValidator<CreateD
     }
 }
 
-internal sealed class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, CreateDepartmentDto>
+internal sealed class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, ApiResponse<CreateDepartmentDto>>
 {
     private readonly IDepartmentRepository _departmentRepository;
     private readonly IMapper _mapper;
+
     public CreateDepartmentCommandHandler(IDepartmentRepository departmentRepository, IMapper mapper)
     {
         _departmentRepository = departmentRepository;
         _mapper = mapper;
     }
-    public async Task<CreateDepartmentDto> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
+
+    public async Task<ApiResponse<CreateDepartmentDto>> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
     {
         var department = new Department(
             name: request.Name,
-            description: request.Description,
-            createdBy: Guid.Empty
+            createdBy: Guid.Empty,
+            description: request.Description
         );
+
+        if (department is null)
+            return new ApiResponse<CreateDepartmentDto>
+            {
+                Code = 404,
+                Message = "Department not found"
+            };
 
         await _departmentRepository.AddAsync(department, cancellationToken);
         await _departmentRepository.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<CreateDepartmentDto>(department);
+        var createDepartmentDto = _mapper.Map<CreateDepartmentDto>(department);
+
+        return new ApiResponse<CreateDepartmentDto>
+        {
+            Code = 200,
+            Message = "",
+            Data = createDepartmentDto
+        };
     }
 }

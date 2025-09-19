@@ -18,16 +18,16 @@ public class StudentsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
-    {
-        var response = await _mediator.Send(new GetStudents(), cancellationToken);
+    //[HttpGet]
+    //public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+    //{
+    //    var response = await _mediator.Send(new GetStudents(), cancellationToken);
 
-        if (response.Code == 1)
-            return Ok(response); 
-        else
-            return NotFound(response); 
-    }
+    //    if (response.Code == 1)
+    //        return Ok(response); 
+    //    else
+    //        return NotFound(response); 
+    //}
 
 
     //[HttpGet("{id:Guid}")]
@@ -38,9 +38,9 @@ public class StudentsController : ControllerBase
     //    return response;
     //}
 
-    [HttpPost]
-    public async Task<CreateStudentDto> Create([FromBody] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
-    {
-        return await _mediator.Send(createStudentCommand, cancellationToken);
-    }
+    //[HttpPost]
+    //public async Task<CreateStudentDto> Create([FromBody] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
+    //{
+    //    return await _mediator.Send(createStudentCommand, cancellationToken);
+    //}
 }

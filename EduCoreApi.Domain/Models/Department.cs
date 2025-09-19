@@ -1,6 +1,6 @@
-﻿using EduCoreApi.Domain.Common;
-using EduCoreApi.Shared.Exeptions;
+﻿using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
+using EduCoreApi.Domain.Common;
 
 namespace EduCoreApi.Domain.Models;
 

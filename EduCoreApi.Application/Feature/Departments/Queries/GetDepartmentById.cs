@@ -31,7 +31,6 @@ internal sealed class GetByIdDepartmentHandler : IRequestHandler<GetDepartmentBy
 
     public async Task<ApiResponse<GetDepartmentDto>> Handle(GetDepartmentById request, CancellationToken cancellationToken)
     {
-
         var spec = new DepartmentByIdSpec(request.DepartmentId, asNoTracking: true);
         var department = await _departmentRepository.FirstOrDefaultAsync(spec, cancellationToken);
 

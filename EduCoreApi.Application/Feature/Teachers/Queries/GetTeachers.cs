@@ -6,7 +6,6 @@ using EduCoreApi.Domain.Models;
 using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace EduCoreApi.Application.Feature.Teachers.Queries;
 
@@ -39,7 +38,7 @@ internal sealed class GetTeachersHandler : IRequestHandler<GetTeachers, ApiRespo
             return new ApiResponse<List<GetTeacherDto>>
             {
                 Code = 404,
-                Message = "Teachers not found",
+                Message = "Teachers not found"
             };
         }
 

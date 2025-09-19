@@ -41,11 +41,11 @@ namespace EduCoreApi.API.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<CreateDepartmentDto> Create([FromBody] CreateDepartmentCommand createDepartmentCommand, CancellationToken cancellationToken = default)
-        {
-            return await _mediator.Send(createDepartmentCommand, cancellationToken);
-        }
+        //[HttpPost]
+        //public async Task<CreateDepartmentDto> Create([FromBody] CreateDepartmentCommand createDepartmentCommand, CancellationToken cancellationToken = default)
+        //{
+        //    return await _mediator.Send(createDepartmentCommand, cancellationToken);
+        //}
 
         [HttpPut]
         public async Task<ApiResponse<Guid>> Update([FromBody] UpdateDepartmentCommand updateDepartmentCommand, CancellationToken cancellationToken = default)

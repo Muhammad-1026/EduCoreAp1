@@ -1,5 +1,5 @@
-﻿using Ardalis.Specification;
-using EduCoreApi.Domain.Models;
+﻿using EduCoreApi.Domain.Models;
+using Ardalis.Specification;
 
 namespace EduCoreApi.Application.Feature.Subjects.Repositories;
 

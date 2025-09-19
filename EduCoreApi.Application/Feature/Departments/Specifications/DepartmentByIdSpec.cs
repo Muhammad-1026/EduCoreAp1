@@ -1,6 +1,6 @@
-﻿using Ardalis.Specification;
-using EduCoreApi.Application.Common.Specifications;
+﻿using EduCoreApi.Application.Common.Specifications;
 using EduCoreApi.Domain.Models;
+using Ardalis.Specification;
 
 namespace EduCoreApi.Application.Feature.Departments.Specifications;
 
