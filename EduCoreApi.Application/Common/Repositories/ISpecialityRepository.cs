@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
 
-namespace EduCoreApi.Application.Feature.Specialitys.Repositories;
+namespace EduCoreApi.Application.Common.Repositories;
  
 public interface ISpecialityRepository : IRepositoryBase<Domain.Models.Speciality>;

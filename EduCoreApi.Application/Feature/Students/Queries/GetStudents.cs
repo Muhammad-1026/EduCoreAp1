@@ -1,9 +1,9 @@
-﻿using EduCoreApi.Application.Feature.Students.Models;
-using EduCoreApi.Application.Common.Specifications;
-using EduCoreApi.Application.Common.Repositories;
+﻿using Ardalis.Specification;
 using EduCoreApi.Application.Common.Results;
+using EduCoreApi.Application.Common.Specifications;
+using EduCoreApi.Application.Feature.Students.Models;
+using EduCoreApi.Application.Feature.Students.Repositories;
 using EduCoreApi.Domain.Models;
-using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
 

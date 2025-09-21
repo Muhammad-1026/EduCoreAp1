@@ -1,8 +1,7 @@
-﻿using EduCoreApi.Application.Common.Repositories;
-using EduCoreApi.Application.Common.Results;
+﻿using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Application.Feature.Students.Models;
+using EduCoreApi.Application.Feature.Students.Repositories;
 using EduCoreApi.Application.Feature.Students.Specifications;
-using EduCoreApi.Shared.Exeptions;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
@@ -35,7 +34,7 @@ internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, Ap
         var spec = new StudentByIdSpec(request.StudentId, asNoTracking: true);
 
         var student = await _studentRepository.FirstOrDefaultAsync(spec, cancellationToken);
-        
+
         if (student == null)
         {
             return new ApiResponse<GetStudentDto>

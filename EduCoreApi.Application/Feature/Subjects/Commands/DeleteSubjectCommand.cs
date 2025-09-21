@@ -1,7 +1,7 @@
-﻿using EduCoreApi.Application.Feature.Subjects.Repositories;
-using EduCoreApi.Application.Common.Results;
+﻿using EduCoreApi.Application.Common.Results;
 using FluentValidation;
 using MediatR;
+using EduCoreApi.Application.Common.Repositories;
 
 namespace EduCoreApi.Application.Feature.Subjects.Commands;
 

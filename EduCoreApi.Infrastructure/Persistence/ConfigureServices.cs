@@ -1,9 +1,5 @@
 ﻿using EduCoreApi.Application.Common.Repositories;
-using EduCoreApi.Application.Feature.Courses.Repositories;
-using EduCoreApi.Application.Feature.Groups.Repositories;
-using EduCoreApi.Application.Feature.Specialitys.Repositories;
-using EduCoreApi.Application.Feature.Subjects.Repositories;
-using EduCoreApi.Application.Feature.Teachers.Repositories;
+using EduCoreApi.Application.Feature.Students.Repositories;
 using EduCoreApi.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 

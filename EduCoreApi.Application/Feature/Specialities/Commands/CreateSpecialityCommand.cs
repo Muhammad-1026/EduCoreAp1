@@ -1,10 +1,10 @@
-﻿using EduCoreApi.Application.Feature.Specialitys.Repositories;
-using EduCoreApi.Application.Feature.Specialities.Models;
+﻿using EduCoreApi.Application.Feature.Specialities.Models;
 using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Domain.Models;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
+using EduCoreApi.Application.Common.Repositories;
 
 namespace EduCoreApi.Application.Feature.Specialitys.Commands;
 

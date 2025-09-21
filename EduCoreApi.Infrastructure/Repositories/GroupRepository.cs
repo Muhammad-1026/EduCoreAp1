@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using EduCoreApi.Application.Feature.Groups.Repositories;
+using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Infrastructure.Persistence;
 using System.Text.RegularExpressions;
 

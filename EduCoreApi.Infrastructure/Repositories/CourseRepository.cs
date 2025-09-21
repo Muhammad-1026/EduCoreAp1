@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using EduCoreApi.Application.Feature.Courses.Repositories;
+using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Domain.Models;
 using EduCoreApi.Infrastructure.Persistence;
 
@@ -9,6 +9,6 @@ internal sealed class CourseRepository : RepositoryBase<Course>, ICourseReposito
 {
     public CourseRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-            
+
     }
 }

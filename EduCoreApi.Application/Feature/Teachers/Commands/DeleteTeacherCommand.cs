@@ -1,8 +1,8 @@
 ﻿using EduCoreApi.Application.Feature.Teachers.Specifications;
-using EduCoreApi.Application.Feature.Teachers.Repositories;
 using EduCoreApi.Application.Common.Results;
 using FluentValidation;
 using MediatR;
+using EduCoreApi.Application.Common.Repositories;
 
 namespace EduCoreApi.Application.Feature.Teachers.Commands;
 

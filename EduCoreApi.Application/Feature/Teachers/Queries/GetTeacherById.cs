@@ -1,10 +1,10 @@
 ﻿using EduCoreApi.Application.Feature.Teachers.Specifications;
-using EduCoreApi.Application.Feature.Teachers.Repositories;
 using EduCoreApi.Application.Feature.Teachers.Models;
 using EduCoreApi.Application.Common.Results;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
+using EduCoreApi.Application.Common.Repositories;
 
 namespace EduCoreApi.Application.Feature.Teachers.Queries;
 

@@ -1,5 +1,5 @@
-﻿using EduCoreApi.Application.Common.Repositories;
-using EduCoreApi.Application.Feature.Students.Models;
+﻿using EduCoreApi.Application.Feature.Students.Models;
+using EduCoreApi.Application.Feature.Students.Repositories;
 using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Models;
 using FluentValidation;
