@@ -9,7 +9,4 @@ public class GetSpecialityDto
 
     public Guid DepartmentId { get; set; }          
     public string DepartmentName { get; set; } = default!; 
-
-    public int GroupCount { get; set; }              
-    public int StudentCount { get; set; }
 }

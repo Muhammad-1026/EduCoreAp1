@@ -14,4 +14,5 @@ public class GetTeacherDto
     public Gender Gender { get; set; }
     public bool IsActive { get; set; }
     public Guid DepartmentId { get; set; }
+    public string DepartmentName { get; set; } = default!;
 }
