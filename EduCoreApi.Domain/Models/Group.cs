@@ -33,10 +33,18 @@ public class Group : Entity
 
     public void SetCourseNumber(int courseNumber)
     {
-        if (courseNumber < 1 || courseNumber > 6)
-            throw new BussinessLogicException(GroupErrors.CourseNumberIsInvalid);
+        //if (courseNumber < 1 || courseNumber > 6)
+        //    throw new BussinessLogicException(GroupErrors.CourseNumberIsInvalid);
 
         CourseNumber = courseNumber;
+    }
+
+    public void SetSpeciality(Guid specialityId)
+    {
+        if (specialityId == Guid.Empty)
+            throw new BussinessLogicException(GroupErrors.SpecialityIdCantBeNull);
+
+        SpecialityId = specialityId;
     }
 
     public void SetDescription(string? description)
@@ -56,5 +64,9 @@ public class Group : Entity
             "Номер курса должен быть от 1 до 6."
         );
 
+        public static readonly Error SpecialityIdCantBeNull = new(
+            "Group.SpecialityIdCantBeNull",
+            "Id специальности не может быть пустым."
+        );
     }
 }

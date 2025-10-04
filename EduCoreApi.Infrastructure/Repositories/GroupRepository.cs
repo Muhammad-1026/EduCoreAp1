@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
 using EduCoreApi.Application.Feature.Groups.Repositories;
+using EduCoreApi.Domain.Models;
 using EduCoreApi.Infrastructure.Persistence;
-using System.Text.RegularExpressions;
 
 namespace EduCoreApi.Infrastructure.Repositories;
 

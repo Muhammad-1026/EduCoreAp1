@@ -1,5 +1,12 @@
-﻿using EduCoreApi.Shared.Models;
+﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
+using EduCoreApi.Application.Feature.Students.Specifications;
+using EduCoreApi.Application.Feature.Subjects.Commands;
+using EduCoreApi.Application.Feature.Subjects.Repositories;
+using EduCoreApi.Application.Feature.Subjects.Specifications;
+using EduCoreApi.Shared.Models;
 using FluentValidation;
+using MediatR;
 
 namespace EduCoreApi.Application.Feature.Students.Commands;
 
@@ -14,7 +21,8 @@ public sealed record UpdateStudentCommand(Guid StudentId,
     Gender Gender,
     bool IsActive,
     Guid GroupId,
-    Guid SpecialityId);
+    Guid SpecialityId
+    ) : IRequest<ApiResponse<Guid>>;
 
 public sealed class UpdateStudentCommandValidator : AbstractValidator<UpdateStudentCommand>
 {
@@ -47,5 +55,50 @@ public sealed class UpdateStudentCommandValidator : AbstractValidator<UpdateStud
             .GreaterThan(Guid.Empty);
         RuleFor(x => x.SpecialityId)
             .GreaterThan(Guid.Empty);
+    }
+}
+
+internal sealed class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, ApiResponse<Guid>>
+{
+    private readonly IStudentRepository _studentRepository;
+
+    public UpdateStudentCommandHandler(IStudentRepository studentRepository)
+    {
+        _studentRepository = studentRepository;
+    }
+
+    public async Task<ApiResponse<Guid>> Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
+    {
+        var speciality = await _studentRepository.FirstOrDefaultAsync(new StudentByIdSpec(request.StudentId), cancellationToken);
+
+        if (speciality is null)
+        {
+            return new ApiResponse<Guid>
+            {
+                Code = 404,
+                Message = "Speciality not found"
+            };
+        }
+        speciality.SetEmail(request.Email);
+        speciality.SetImageUrl(request.ImageUrl);
+        speciality.SetFullName(request.FullName);
+        speciality.SetBirthDate(request.BirthDate);
+        speciality.SetPhoneNumber(request.PhoneNumber);
+        speciality.SetAddress(request.Address);
+        speciality.SetIsDormitoryResident(request.IsDormitoryResident);
+        speciality.SetGender(request.Gender);
+        speciality.SetIsActive(request.IsActive);
+        speciality.SetGroupId(request.GroupId);
+        speciality.SetSpecialityId(request.SpecialityId);
+
+        await _studentRepository.UpdateAsync(speciality, cancellationToken);
+        await _studentRepository.SaveChangesAsync(cancellationToken);
+
+        return new ApiResponse<Guid>
+        {
+            Code = 200,
+            Message = "Speciality updated successfully",
+            Data = speciality.Id,
+        };
     }
 }

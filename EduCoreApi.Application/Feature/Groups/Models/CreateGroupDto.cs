@@ -6,5 +6,5 @@ public class CreateGroupDto
     public int CourseNumber { get; set; }
     public string? Description { get; set; }
 
-    public Guid SpecialityId { get; set; }
+    public required Guid SpecialityId { get; set; }
 }

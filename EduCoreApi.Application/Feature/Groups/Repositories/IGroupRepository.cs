@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
-using System.Text.RegularExpressions;
+using EduCoreApi.Domain.Models;
 
 namespace EduCoreApi.Application.Feature.Groups.Repositories;
+
 public interface IGroupRepository : IRepositoryBase<Group>;

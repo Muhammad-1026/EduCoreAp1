@@ -1,7 +1,8 @@
-﻿using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Feature.Students.Commands;
+﻿using EduCoreApi.Application.Feature.Students.Commands;
 using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Application.Feature.Students.Queries;
+using EduCoreApi.Application.Feature.Subjects.Commands;
+using EduCoreApi.Application.Feature.Teachers.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,23 +25,53 @@ public class StudentsController : ControllerBase
         var response = await _mediator.Send(new GetStudents(), cancellationToken);
 
         if (response.Code == 1)
-            return Ok(response); 
+            return Ok(response);
         else
-            return NotFound(response); 
+            return NotFound(response);
     }
 
 
-    //[HttpGet("{id:Guid}")]
-    //public async Task<GetStudentDto> GetById(Guid id, CancellationToken cancellationToken = default)
-    //{
-    //    var response = await _mediator.Send(new GetStudentById(id), cancellationToken);
+    [HttpGet("{id:Guid}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken = default)
+    {
+        var response = await _mediator.Send(new GetStudentById(id), cancellationToken);
 
-    //    return response;
-    //}
+        if (response.Code == 200)
+            return Ok(response);
+        else
+            return NotFound(response);
+    }
 
     [HttpPost]
-    public async Task<CreateStudentDto> Create([FromBody] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Create([FromForm] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
     {
-        return await _mediator.Send(createStudentCommand, cancellationToken);
+        var response = await _mediator.Send(createStudentCommand, cancellationToken);
+
+        if (response.Code == 200)
+            return Ok(response);
+        else
+            return NotFound(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromForm] UpdateStudentCommand updateStudentCommand, CancellationToken cancellationToken = default)
+    {
+        var response = await _mediator.Send(updateStudentCommand, cancellationToken);
+
+        if (response.Code == 200)
+            return Ok(response);
+        else
+            return NotFound(response);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody]  DeleteStudentCommand deleteStudentCommand, CancellationToken cancellationToken = default)
+    {
+        var response = await _mediator.Send(deleteStudentCommand, cancellationToken);
+
+        if (response.Code == 200)
+            return Ok(response);
+        else
+            return NotFound(response);
     }
 }

@@ -9,7 +9,7 @@ namespace EduCoreApi.Application.Feature.Departments.Commands;
 public sealed record UpdateDepartmentCommand(Guid DepartmentId,string Name,string? Description) : IRequest<ApiResponse<Guid>>;
 
 public sealed class UpdateDepartmentCommandValidator : AbstractValidator<UpdateDepartmentCommand>
-{
+{ 
     public UpdateDepartmentCommandValidator()
     {
         RuleFor(x => x.DepartmentId)

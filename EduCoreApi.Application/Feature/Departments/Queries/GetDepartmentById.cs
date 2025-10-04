@@ -8,13 +8,14 @@ using MediatR;
 
 namespace EduCoreApi.Application.Feature.Departments.Queries;
 
-public sealed record class GetDepartmentById(Guid DepartmentId) : IRequest<ApiResponse<GetDepartmentDto>>;
+public sealed record GetDepartmentById(Guid DepartmentId) : IRequest<ApiResponse<GetDepartmentDto>>;
 
 public sealed class GetDepartmentByIdValidator : AbstractValidator<GetDepartmentById>
 {
     public GetDepartmentByIdValidator()
     {
-        RuleFor(x => x.DepartmentId).GreaterThan(Guid.Empty);
+        RuleFor(x => x.DepartmentId)
+            .GreaterThan(Guid.Empty);
     }
 }
 

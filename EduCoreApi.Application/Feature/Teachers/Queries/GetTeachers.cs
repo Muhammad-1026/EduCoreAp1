@@ -30,7 +30,7 @@ internal sealed class GetTeachersHandler : IRequestHandler<GetTeachers, ApiRespo
 
         var teachers = await _teacherRepository.ListAsync(spec, cancellationToken);
 
-        if (teachers == null || !teachers.Any())
+        if (teachers == null)
         {
             return new ApiResponse<List<GetTeacherDto>>
             {

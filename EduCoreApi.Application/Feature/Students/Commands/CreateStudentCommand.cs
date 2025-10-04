@@ -1,4 +1,5 @@
 ﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Models;
@@ -20,9 +21,9 @@ public sealed record CreateStudentCommand(string FullName,
     bool IsActive,
     Guid GroupId,
     Guid SpecialityId
-    ) : IRequest<CreateStudentDto>;
+    ) : IRequest<ApiResponse<CreateStudentDto>>;
 
-public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStudentCommand>
+public sealed class CreateStudentCommandValidator : AbstractValidator< CreateStudentCommand>
 {
     public CreateStudentCommandValidator()
     {
@@ -48,7 +49,7 @@ public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStud
     }
 }
 
-internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, CreateStudentDto>
+internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, ApiResponse<CreateStudentDto>>
 {
     private readonly IStudentRepository _studentRepository;
     private readonly IMapper _mapper;
@@ -59,7 +60,7 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
         _mapper = mapper;
     }
 
-    public async Task<CreateStudentDto> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<CreateStudentDto>> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
         var student = new Student(
             request.FullName,
@@ -84,6 +85,15 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
         await _studentRepository.AddAsync(student, cancellationToken);
         await _studentRepository.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<CreateStudentDto>(student);
+        var createStudentDto = _mapper.Map<CreateStudentDto>(student);
+
+ 
+        return new ApiResponse<CreateStudentDto>
+        {
+            Code = 200,
+            Message = "Student created successfully",
+            Data = createStudentDto
+        };
+        
     }
 }
