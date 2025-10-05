@@ -8,9 +8,11 @@ public class GetCourseTeacherDto
     public Guid Id { get; set; }
     public Guid CourseId { get; set; }
     public GetCourseDto GetCourseDto { get; set; } = default!;
+    public string CourseName { get; set; } = null!;
 
     public Guid TeacherId { get; set; }
     public GetTeacherDto GetTeacherDto { get; set; } = default!;
+    public string TeacherFillName { get; set; } = null!;
 
     public bool IsCurator { get; set; }
 }

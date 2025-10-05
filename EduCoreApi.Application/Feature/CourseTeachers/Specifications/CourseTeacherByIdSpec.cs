@@ -4,11 +4,11 @@ using EduCoreApi.Domain.Models;
 
 namespace EduCoreApi.Application.Feature.CourseTeachers.Specifications;
 
-public class CourseTeacherSpec : DbSpecifications<CourseTeacher>
+public class CourseTeacherByIdSpec : DbSpecifications<CourseTeacher>
 {
     public Guid CourseTeacherId { get; }
 
-    public CourseTeacherSpec(Guid courseTeacherId, bool asNoTracking = false)
+    public CourseTeacherByIdSpec(Guid courseTeacherId, bool asNoTracking = false)
     {
         CourseTeacherId = courseTeacherId;
 

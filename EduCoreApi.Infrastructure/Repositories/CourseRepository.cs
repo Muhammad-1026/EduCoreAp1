@@ -9,6 +9,5 @@ internal sealed class CourseRepository : RepositoryBase<Course>, ICourseReposito
 {
     public CourseRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-            
     }
 }

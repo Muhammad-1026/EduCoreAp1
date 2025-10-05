@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Feature\CourseTeachers\Commands\" />
     <Folder Include="Feature\TimeTables\Commands\" />
     <Folder Include="Feature\TimeTables\Queries\" />
     <Folder Include="Feature\TimeTables\Specifications\" />
