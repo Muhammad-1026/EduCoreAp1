@@ -23,6 +23,22 @@ public class CourseSubject : Entity
         SetHours(hours);
     }
 
+    public void SetCourseIds(Guid courseId)
+    {
+        if (courseId == Guid.Empty)
+            throw new BussinessLogicException(CourseSubjectErrors.CourseIdIsInvalid);
+
+        CourseId = courseId;
+    }
+
+    public void SetSubjectIds(Guid subjectId)
+    {
+        if (subjectId == Guid.Empty)
+            throw new BussinessLogicException(CourseSubjectErrors.SubjectIdIsInvalid);
+
+        SubjectId = subjectId;
+    }
+
     public void SetCredits(int credits)
     {
         if (credits <= 0)
@@ -41,6 +57,16 @@ public class CourseSubject : Entity
 
     public static class CourseSubjectErrors
     {
+        public static readonly Error CourseIdIsInvalid = new(
+            "CourseSubject.CourseIdIsInvalid",
+            "Course ID указан неверно."
+        );
+
+        public static readonly Error SubjectIdIsInvalid = new(
+            "CourseSubject.SubjectIdIsInvalid",
+            "Subject ID указан неверно."
+        );
+
         public static readonly Error CreditsMustBePositive = new(
             "CourseSubject.CreditsMustBePositive",
             "Количество кредитов должно быть больше нуля."

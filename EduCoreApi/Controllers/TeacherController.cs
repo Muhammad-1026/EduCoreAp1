@@ -65,10 +65,10 @@ public class TeacherController(IMediator mediator) : ControllerBase
             return response;
     }
 
-    [HttpDelete]
-    public async Task<ApiResponse> Delete([FromBody] DeleteTeacherCommand deleteTeacherCommand, CancellationToken cancellationToken = default)
+    [HttpDelete("{id:Guid}")]
+    public async Task<ApiResponse> Delete(Guid id, CancellationToken cancellationToken = default)
     {
-        var response = await mediator.Send(deleteTeacherCommand, cancellationToken);
+        var response = await mediator.Send(new DeleteTeacherCommand(id), cancellationToken);
 
         if (response.Code == 200)
             return response;

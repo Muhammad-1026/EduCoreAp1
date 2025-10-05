@@ -1,7 +1,8 @@
 ﻿using EduCoreApi.Domain.Common;
-using EduCoreApi.Domain.Models;
 using EduCoreApi.Shared.Exeptions;
 using EduCoreApi.Shared.Models;
+
+namespace EduCoreApi.Domain.Models;
 
 public class CourseTeacher : Entity
 {

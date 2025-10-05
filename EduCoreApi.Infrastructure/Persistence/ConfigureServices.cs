@@ -20,6 +20,7 @@ public static class ConfigureServices
         services.AddScoped<ISubjectRepository, SubjectRepository>();
         services.AddScoped<ISpecialityRepository, SpecialityRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<ICourseSubjectRepository, CourseSubjectRepository>();
 
         return services;
     }

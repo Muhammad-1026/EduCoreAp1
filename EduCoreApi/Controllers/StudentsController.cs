@@ -1,8 +1,5 @@
 ﻿using EduCoreApi.Application.Feature.Students.Commands;
-using EduCoreApi.Application.Feature.Students.Models;
 using EduCoreApi.Application.Feature.Students.Queries;
-using EduCoreApi.Application.Feature.Subjects.Commands;
-using EduCoreApi.Application.Feature.Teachers.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
