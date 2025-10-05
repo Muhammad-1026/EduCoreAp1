@@ -10,19 +10,12 @@ namespace EduCoreApi.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class StudentsController : ControllerBase
+public class StudentsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public StudentsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
     {
-        var response = await _mediator.Send(new GetStudents(), cancellationToken);
+        var response = await mediator.Send(new GetStudents(), cancellationToken);
 
         if (response.Code == 1)
             return Ok(response);
@@ -34,7 +27,7 @@ public class StudentsController : ControllerBase
     [HttpGet("{id:Guid}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-        var response = await _mediator.Send(new GetStudentById(id), cancellationToken);
+        var response = await mediator.Send(new GetStudentById(id), cancellationToken);
 
         if (response.Code == 200)
             return Ok(response);
@@ -45,7 +38,7 @@ public class StudentsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
     {
-        var response = await _mediator.Send(createStudentCommand, cancellationToken);
+        var response = await mediator.Send(createStudentCommand, cancellationToken);
 
         if (response.Code == 200)
             return Ok(response);
@@ -56,7 +49,7 @@ public class StudentsController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update([FromForm] UpdateStudentCommand updateStudentCommand, CancellationToken cancellationToken = default)
     {
-        var response = await _mediator.Send(updateStudentCommand, cancellationToken);
+        var response = await mediator.Send(updateStudentCommand, cancellationToken);
 
         if (response.Code == 200)
             return Ok(response);
@@ -64,10 +57,10 @@ public class StudentsController : ControllerBase
             return NotFound(response);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody]  DeleteStudentCommand deleteStudentCommand, CancellationToken cancellationToken = default)
+    [HttpDelete("{id:Guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
     {
-        var response = await _mediator.Send(deleteStudentCommand, cancellationToken);
+        var response = await mediator.Send(new DeleteStudentCommand(id), cancellationToken);
 
         if (response.Code == 200)
             return Ok(response);

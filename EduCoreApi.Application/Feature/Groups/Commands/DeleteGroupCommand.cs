@@ -6,7 +6,6 @@ using MediatR;
 
 namespace EduCoreApi.Application.Feature.Groups.Commands;
 
-
 public sealed record DeleteGroupCommand(Guid GroupId) : IRequest<ApiResponse>;
 
 public sealed class DeleteGroupCommandValidator : AbstractValidator<DeleteGroupCommand>

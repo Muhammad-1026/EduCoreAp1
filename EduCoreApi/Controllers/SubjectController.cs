@@ -61,10 +61,10 @@ namespace EduCoreApi.API.Controllers
                 return NotFound(response);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteTeacherCommand deleteTeacherCommand, CancellationToken cancellationToken = default)
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken = default)
         {
-            var response = await _mediator.Send(deleteTeacherCommand, cancellationToken);
+            var response = await _mediator.Send(new DeleteSubjectCommand(id), cancellationToken);
 
             if (response.Code == 200)
                 return Ok(response);

@@ -129,14 +129,14 @@ public class Student : Entity
 
     public void SetImageUrl(string? imageUrl)
     {
-        if (string.IsNullOrWhiteSpace(imageUrl))
-        {
-            ImageUrl = null;
-            return;
-        }
+        //if (string.IsNullOrWhiteSpace(imageUrl))
+        //{
+        //    ImageUrl = null;
+        //    return;
+        //}
 
-        if (!Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute))
-            throw new BussinessLogicException(StudentsErrors.ImageUrlIsInvalid);
+        //if (!Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute))
+        //    throw new BussinessLogicException(StudentsErrors.ImageUrlIsInvalid);
 
         ImageUrl = imageUrl;
     }

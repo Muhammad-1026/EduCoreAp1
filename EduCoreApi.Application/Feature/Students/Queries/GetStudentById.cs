@@ -47,13 +47,13 @@ internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, Ap
         }
 
 
-        var speciality = _mapper.Map<ApiResponse<GetStudentDto>>(student);
+        var speciality = _mapper.Map<GetStudentDto>(student);
 
         return new ApiResponse<GetStudentDto>
         {
             Code = 200,
-            Message = "retrieved successfully",
-            Data = speciality.Data
+            Message = "Student retrieved successfully",
+            Data = speciality
         };
     }
 }

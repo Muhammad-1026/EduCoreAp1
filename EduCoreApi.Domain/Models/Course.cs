@@ -12,10 +12,9 @@ public class Course : Entity
     public List<CourseTeacher> CourseTeachers { get; private set; } = new();
     public List<CourseSubject> CourseSubjects { get; private set; } = new();
 
-    public Course(string name, string? description, Guid createdBy) : base(createdBy)
+    public Course(string name, Guid createdBy) : base(createdBy)
     {
         SetName(name);
-        SetDescription(description);
     }
 
     public void SetName(string name)

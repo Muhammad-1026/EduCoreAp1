@@ -42,7 +42,7 @@ internal sealed class GetSubjectByIdHendler : IRequestHandler<GetSubjectById, Ap
             return new ApiResponse<GetSubjectDto>
             {
                 Code = 404,
-                Message = "Group no found",
+                Message = "Subject no found",
                 Data = null
             };
         }
@@ -52,7 +52,7 @@ internal sealed class GetSubjectByIdHendler : IRequestHandler<GetSubjectById, Ap
         return new ApiResponse<GetSubjectDto>
         {
             Code = 200,
-            Message = "Group retrieved successfully",
+            Message = "Subject retrieved successfully",
             Data = getGroupDto
         };
     }
