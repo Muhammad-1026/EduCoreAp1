@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduCoreApi.Application.Services
+namespace EduCoreApi.Application.Services;
+
+internal interface IFileService
 {
-    internal interface IFileService
-    {
-    }
 }

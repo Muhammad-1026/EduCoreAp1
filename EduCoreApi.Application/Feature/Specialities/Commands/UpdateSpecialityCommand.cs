@@ -1,5 +1,5 @@
-﻿using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Feature.Specialitys.Repositories;
+﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Application.Feature.Specialitys.Specifications;
 using EduCoreApi.Domain.Models;
 using FluentValidation;

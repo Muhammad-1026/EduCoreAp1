@@ -1,5 +1,5 @@
-﻿using EduCoreApi.Application.Common.Results;
-using EduCoreApi.Application.Feature.Groups.Repositories;
+﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Application.Feature.Groups.Specifications;
 using FluentValidation;
 using MediatR;

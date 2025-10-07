@@ -1,11 +1,6 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using EduCoreApi.Application.Feature.TimeTables.Repositories;
+using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EduCoreApi.Infrastructure.Repositories;
 

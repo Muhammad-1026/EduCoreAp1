@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using EduCoreApi.Application.Feature.Teachers.Repositories;
+using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Domain.Models;
 using EduCoreApi.Infrastructure.Persistence;
 

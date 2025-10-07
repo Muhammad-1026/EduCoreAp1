@@ -19,6 +19,7 @@
   <ItemGroup>
     <Folder Include="Feature\TimeTables\Commands\" />
     <Folder Include="Feature\TimeTables\Queries\" />
+    <Folder Include="Feature\TimeTables\Repositories\" />
     <Folder Include="Feature\TimeTables\Specifications\" />
   </ItemGroup>
 

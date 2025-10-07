@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using EduCoreApi.Domain.Models;
 
-namespace EduCoreApi.Application.Feature.Courses.Repositories;
+namespace EduCoreApi.Application.Common.Repositories;
 
 public interface ICourseRepository : IRepositoryBase<Course>;

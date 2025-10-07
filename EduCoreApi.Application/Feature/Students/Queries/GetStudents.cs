@@ -6,6 +6,7 @@ using EduCoreApi.Domain.Models;
 using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
+using EduCoreApi.Application.Feature.Students.Repositories;
 
 namespace EduCoreApi.Application.Feature.Students.Queries;
 

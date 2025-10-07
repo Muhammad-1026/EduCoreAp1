@@ -1,6 +1,6 @@
-﻿using EduCoreApi.Application.Common.Results;
+﻿using EduCoreApi.Application.Common.Repositories;
+using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Application.Feature.Groups.Models;
-using EduCoreApi.Application.Feature.Groups.Repositories;
 using EduCoreApi.Application.Feature.Groups.Specifications;
 using FluentValidation;
 using MapsterMapper;
@@ -37,13 +37,12 @@ internal sealed class GetGroupByIdHendler : IRequestHandler<GetGroupById, ApiRes
         var group = await _groupRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
 
-        if (group == null)
+        if (group is null)
         {
             return new ApiResponse<GetGroupDto>
             {
                 Code = 404,
-                Message = "Group no found",
-                Data = null
+                Message = "Group no found"
             };
         }
 

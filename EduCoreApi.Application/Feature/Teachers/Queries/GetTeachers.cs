@@ -1,11 +1,11 @@
-﻿using EduCoreApi.Application.Feature.Teachers.Repositories;
-using EduCoreApi.Application.Feature.Teachers.Models;
+﻿using EduCoreApi.Application.Feature.Teachers.Models;
 using EduCoreApi.Application.Common.Specifications;
 using EduCoreApi.Application.Common.Results;
 using EduCoreApi.Domain.Models;
 using Ardalis.Specification;
 using MapsterMapper;
 using MediatR;
+using EduCoreApi.Application.Common.Repositories;
 
 namespace EduCoreApi.Application.Feature.Teachers.Queries;
 
