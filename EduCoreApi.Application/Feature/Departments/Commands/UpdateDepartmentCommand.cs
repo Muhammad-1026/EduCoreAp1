@@ -23,18 +23,11 @@ public sealed class UpdateDepartmentCommandValidator : AbstractValidator<UpdateD
     }
 }
 
-internal sealed class UpdateDepartmentCommandHandler : IRequestHandler<UpdateDepartmentCommand, ApiResponse<Guid>>
+internal sealed class UpdateDepartmentCommandHandler(IDepartmentRepository departmentRepository) : IRequestHandler<UpdateDepartmentCommand, ApiResponse<Guid>>
 {
-    private readonly IDepartmentRepository _departmentRepository;
-
-    public UpdateDepartmentCommandHandler(IDepartmentRepository departmentRepository)
-    {
-        _departmentRepository = departmentRepository;
-    }
-
     public async Task<ApiResponse<Guid>> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
     {
-        var department = await _departmentRepository.FirstOrDefaultAsync(new DepartmentByIdSpec(request.DepartmentId), cancellationToken);
+        var department = await departmentRepository.FirstOrDefaultAsync(new DepartmentByIdSpec(request.DepartmentId), cancellationToken);
 
         if (department is null)
         {
@@ -50,8 +43,8 @@ internal sealed class UpdateDepartmentCommandHandler : IRequestHandler<UpdateDep
         if (!string.IsNullOrWhiteSpace(request.Description))
             department.SetDescription(request.Description);
 
-        await _departmentRepository.UpdateAsync(department, cancellationToken);
-        await _departmentRepository.SaveChangesAsync(cancellationToken);
+        await departmentRepository.UpdateAsync(department, cancellationToken);
+        await departmentRepository.SaveChangesAsync(cancellationToken);
 
 
         return new ApiResponse<Guid>

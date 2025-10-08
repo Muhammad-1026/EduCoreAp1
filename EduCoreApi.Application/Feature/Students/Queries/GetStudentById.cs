@@ -18,22 +18,13 @@ public sealed class GetStudentByIdValidator : AbstractValidator<GetStudentById>
     }
 }
 
-internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, ApiResponse<GetStudentDto>>
+internal sealed class GetStudentByIdHendler(IStudentRepository studentRepository, IMapper mapper) : IRequestHandler<GetStudentById, ApiResponse<GetStudentDto>>
 {
-    private readonly IStudentRepository _studentRepository;
-    private readonly IMapper _mapper;
-
-    public GetStudentByIdHendler(IStudentRepository studentRepository, IMapper mapper)
-    {
-        _studentRepository = studentRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetStudentDto>> Handle(GetStudentById request, CancellationToken cancellationToken)
     {
         var spec = new StudentByIdSpec(request.StudentId, asNoTracking: true);
 
-        var student = await _studentRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var student = await studentRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (student == null)
         {
@@ -45,8 +36,7 @@ internal sealed class GetStudentByIdHendler : IRequestHandler<GetStudentById, Ap
             };
         }
 
-
-        var speciality = _mapper.Map<GetStudentDto>(student);
+        var speciality = mapper.Map<GetStudentDto>(student);
 
         return new ApiResponse<GetStudentDto>
         {

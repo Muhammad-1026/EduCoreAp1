@@ -18,21 +18,12 @@ public sealed class GetTeacherByIdValidator : AbstractValidator<GetTeacherById>
     }
 }
 
-internal sealed class GetByIdTeacherHandler : IRequestHandler<GetTeacherById, ApiResponse<GetTeacherDto>>
+internal sealed class GetByIdTeacherHandler(ITeacherRepository teacherRepository, IMapper mapper) : IRequestHandler<GetTeacherById, ApiResponse<GetTeacherDto>>
 {
-    private readonly ITeacherRepository _teacherRepository;
-    private readonly IMapper _mapper;
-
-    public GetByIdTeacherHandler(ITeacherRepository teacherRepository, IMapper mapper)
-    {
-        _teacherRepository = teacherRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetTeacherDto>> Handle(GetTeacherById request, CancellationToken cancellationToken)
     {
         var spec = new TeacherByIdSpec(request.TeacherId, asNoTracking: true);
-        var teacher = await _teacherRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var teacher = await teacherRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (teacher == null)
             return new ApiResponse<GetTeacherDto>
@@ -45,7 +36,7 @@ internal sealed class GetByIdTeacherHandler : IRequestHandler<GetTeacherById, Ap
         {
             Code = 200,
             Message = "Teacher retrieved successfully",
-            Data = _mapper.Map<GetTeacherDto>(teacher)
+            Data = mapper.Map<GetTeacherDto>(teacher)
         };
     }
 }

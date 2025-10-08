@@ -25,17 +25,11 @@ public sealed class UpdateGroupCommandValidator : AbstractValidator<UpdateGroupC
     }
 }
 
-internal sealed class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, ApiResponse<Guid>>
+internal sealed class UpdateGroupCommandHandler(IGroupRepository groupRepository) : IRequestHandler<UpdateGroupCommand, ApiResponse<Guid>>
 {
-    private readonly IGroupRepository _groupRepository;
-    public UpdateGroupCommandHandler(IGroupRepository groupRepository)
-    {
-        _groupRepository = groupRepository;
-    }
-
     public async Task<ApiResponse<Guid>> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _groupRepository.FirstOrDefaultAsync(new GroupByIdSpec(request.GroupId), cancellationToken);
+        var speciality = await groupRepository.FirstOrDefaultAsync(new GroupByIdSpec(request.GroupId), cancellationToken);
 
         if (speciality is null)
         {
@@ -53,8 +47,8 @@ internal sealed class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCom
         if (!string.IsNullOrWhiteSpace(request.Description))
             speciality.SetDescription(request.Description);
 
-        await _groupRepository.UpdateAsync(speciality, cancellationToken);
-        await _groupRepository.SaveChangesAsync(cancellationToken);
+        await groupRepository.UpdateAsync(speciality, cancellationToken);
+        await groupRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<Guid>
         {

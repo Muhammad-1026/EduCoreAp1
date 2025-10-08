@@ -11,17 +11,8 @@ namespace EduCoreApi.Application.Feature.Subjects.Queries;
 
 public sealed record GetSubjects : IRequest<ApiResponse<List<GetSubjectDto>>>;
 
-internal sealed class GetSubjectsHendler : IRequestHandler<GetSubjects, ApiResponse<List<GetSubjectDto>>>
+internal sealed class GetSubjectsHendler(ISubjectRepository subjectRepository, IMapper mapper) : IRequestHandler<GetSubjects, ApiResponse<List<GetSubjectDto>>>
 {
-    private readonly ISubjectRepository _subjectRepository;
-    private readonly IMapper _mapper;
-
-    public GetSubjectsHendler(ISubjectRepository subjectRepository, IMapper mapper)
-    {
-        _subjectRepository = subjectRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<List<GetSubjectDto>>> Handle(GetSubjects request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Subject>();
@@ -30,7 +21,7 @@ internal sealed class GetSubjectsHendler : IRequestHandler<GetSubjects, ApiRespo
             .Query
             .AsNoTracking();
 
-        var specialities = await _subjectRepository.ListAsync(spec, cancellationToken);
+        var specialities = await subjectRepository.ListAsync(spec, cancellationToken);
 
         if (specialities == null)
         {
@@ -42,7 +33,7 @@ internal sealed class GetSubjectsHendler : IRequestHandler<GetSubjects, ApiRespo
             };
         }
 
-        var specialityDto = _mapper.Map<List<GetSubjectDto>>(specialities);
+        var specialityDto = mapper.Map<List<GetSubjectDto>>(specialities);
 
         return new ApiResponse<List<GetSubjectDto>>
         {

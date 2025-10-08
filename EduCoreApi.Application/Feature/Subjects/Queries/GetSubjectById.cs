@@ -19,22 +19,13 @@ public sealed class GetSubjectByIdValidator : AbstractValidator<GetSubjectById>
     }
 }
 
-internal sealed class GetSubjectByIdHendler : IRequestHandler<GetSubjectById, ApiResponse<GetSubjectDto>>
+internal sealed class GetSubjectByIdHendler(ISubjectRepository subjectRepository, IMapper mapper) : IRequestHandler<GetSubjectById, ApiResponse<GetSubjectDto>>
 {
-    private readonly ISubjectRepository _subjectRepository;
-    private readonly IMapper _mapper;
-
-    public GetSubjectByIdHendler(ISubjectRepository subjectRepository, IMapper mapper)
-    {
-        _subjectRepository = subjectRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetSubjectDto>> Handle(GetSubjectById request, CancellationToken cancellationToken)
     {
         var spec = new SubjectByIdSpec(request.SubjectId, asNoTracking: true);
 
-        var group = await _subjectRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var group = await subjectRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
 
         if (group == null)
@@ -47,7 +38,7 @@ internal sealed class GetSubjectByIdHendler : IRequestHandler<GetSubjectById, Ap
             };
         }
 
-        var getGroupDto = _mapper.Map<GetSubjectDto>(group);
+        var getGroupDto = mapper.Map<GetSubjectDto>(group);
 
         return new ApiResponse<GetSubjectDto>
         {

@@ -18,17 +18,11 @@ public sealed class DeleteStudentCommandValidator : AbstractValidator<DeleteStud
     }
 }
 
-internal sealed class DeleteStudentCommandHandler : IRequestHandler<DeleteStudentCommand, ApiResponse>
+internal sealed class DeleteStudentCommandHandler(IStudentRepository studentRepository) : IRequestHandler<DeleteStudentCommand, ApiResponse>
 {
-    private readonly IStudentRepository _studentRepository;
-    public DeleteStudentCommandHandler(IStudentRepository studentRepository)
-    {
-        _studentRepository = studentRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = await _studentRepository.FirstOrDefaultAsync(new StudentByIdSpec(request.StudentId), cancellationToken);
+        var student = await studentRepository.FirstOrDefaultAsync(new StudentByIdSpec(request.StudentId), cancellationToken);
 
         if (student is null)
             return new ApiResponse
@@ -37,8 +31,8 @@ internal sealed class DeleteStudentCommandHandler : IRequestHandler<DeleteStuden
                 Message = "Student not found"
             };
 
-        await _studentRepository.DeleteAsync(student, cancellationToken);
-        await _studentRepository.SaveChangesAsync(cancellationToken);
+        await studentRepository.DeleteAsync(student, cancellationToken);
+        await studentRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

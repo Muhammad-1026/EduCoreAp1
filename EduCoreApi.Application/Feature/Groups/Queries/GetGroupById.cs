@@ -19,22 +19,13 @@ public sealed class GetGroupByIdValidator : AbstractValidator<GetGroupById>
     }
 }
 
-internal sealed class GetGroupByIdHendler : IRequestHandler<GetGroupById, ApiResponse<GetGroupDto>>
+internal sealed class GetGroupByIdHendler(IGroupRepository groupRepository, IMapper mapper) : IRequestHandler<GetGroupById, ApiResponse<GetGroupDto>>
 {
-    private readonly IGroupRepository _groupRepository;
-    private readonly IMapper _mapper;
-
-    public GetGroupByIdHendler(IGroupRepository groupRepository, IMapper mapper)
-    {
-        _groupRepository = groupRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetGroupDto>> Handle(GetGroupById request, CancellationToken cancellationToken)
     {
         var spec = new GroupByIdSpec(request.GroupId, asNoTracking: true);
 
-        var group = await _groupRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var group = await groupRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
 
         if (group is null)
@@ -46,7 +37,7 @@ internal sealed class GetGroupByIdHendler : IRequestHandler<GetGroupById, ApiRes
             };
         }
 
-        var getGroupDto = _mapper.Map<GetGroupDto>(group);
+        var getGroupDto = mapper.Map<GetGroupDto>(group);
 
         return new ApiResponse<GetGroupDto>
         {

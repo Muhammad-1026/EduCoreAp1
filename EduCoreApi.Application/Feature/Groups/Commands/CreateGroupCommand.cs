@@ -25,17 +25,8 @@ public sealed class CreateGroupCommandValidator : AbstractValidator<CreateGroupC
     }
 }
 
-internal sealed class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, ApiResponse<CreateGroupDto>>
+internal sealed class CreateGroupCommandHandler(IGroupRepository groupRepository, IMapper mapper) : IRequestHandler<CreateGroupCommand, ApiResponse<CreateGroupDto>>
 {
-    private readonly IGroupRepository _groupRepository;
-    private readonly IMapper _mapper;
-
-    public CreateGroupCommandHandler(IGroupRepository groupRepository, IMapper mapper)
-    {
-        _groupRepository = groupRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<CreateGroupDto>> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
     {
         var group = new Group(
@@ -47,10 +38,10 @@ internal sealed class CreateGroupCommandHandler : IRequestHandler<CreateGroupCom
         group.SetDescription(request.Description);
         group.SetSpeciality(request.SpecialityId);
 
-        await _groupRepository.AddAsync(group, cancellationToken);
-        await _groupRepository.SaveChangesAsync(cancellationToken);
+        await groupRepository.AddAsync(group, cancellationToken);
+        await groupRepository.SaveChangesAsync(cancellationToken);
 
-        var createGroupDto = _mapper.Map<CreateGroupDto>(group);
+        var createGroupDto = mapper.Map<CreateGroupDto>(group);
 
         return new ApiResponse<CreateGroupDto>
         {

@@ -22,15 +22,8 @@ public sealed class CreateDepartmentCommandValidator : AbstractValidator<CreateD
     }
 }
 
-internal sealed class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, CreateDepartmentDto>
+internal sealed class CreateDepartmentCommandHandler(IDepartmentRepository departmentRepository, IMapper mapper) : IRequestHandler<CreateDepartmentCommand, CreateDepartmentDto>
 {
-    private readonly IDepartmentRepository _departmentRepository;
-    private readonly IMapper _mapper;
-    public CreateDepartmentCommandHandler(IDepartmentRepository departmentRepository, IMapper mapper)
-    {
-        _departmentRepository = departmentRepository;
-        _mapper = mapper;
-    }
     public async Task<CreateDepartmentDto> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
     {
         var department = new Department(
@@ -39,9 +32,9 @@ internal sealed class CreateDepartmentCommandHandler : IRequestHandler<CreateDep
             createdBy: Guid.Empty
         );
 
-        await _departmentRepository.AddAsync(department, cancellationToken);
-        await _departmentRepository.SaveChangesAsync(cancellationToken);
+        await departmentRepository.AddAsync(department, cancellationToken);
+        await departmentRepository.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<CreateDepartmentDto>(department);
+        return mapper.Map<CreateDepartmentDto>(department);
     }
 }

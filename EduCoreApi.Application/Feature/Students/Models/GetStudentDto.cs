@@ -16,6 +16,8 @@ public class GetStudentDto
     public string? ImageUrl { get; set; }
     public Gender Gender { get; set; }
     public bool IsActive { get; set; }
+    public required string GroupName { get; set; }
+    public required string SpecialityName { get; set; }  
 
     public GetGroupDto GetGroupDto { get; set; } = default!;
     public GetSpecialityDto GetSpecialityDto { get; set; } = default!;

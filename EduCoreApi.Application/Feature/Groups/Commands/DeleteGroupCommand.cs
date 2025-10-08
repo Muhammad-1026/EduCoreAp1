@@ -16,18 +16,11 @@ public sealed class DeleteGroupCommandValidator : AbstractValidator<DeleteGroupC
     }
 }
 
-internal sealed class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, ApiResponse>
+internal sealed class DeleteGroupCommandHandler(IGroupRepository groupRepository) : IRequestHandler<DeleteGroupCommand, ApiResponse>
 {
-    private readonly IGroupRepository _groupRepository;
-
-    public DeleteGroupCommandHandler(IGroupRepository groupRepository)
-    {
-        _groupRepository = groupRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _groupRepository.FirstOrDefaultAsync(new GroupByIdSpec(request.GroupId), cancellationToken);
+        var speciality = await groupRepository.FirstOrDefaultAsync(new GroupByIdSpec(request.GroupId), cancellationToken);
 
         if (speciality is null)
         {
@@ -38,8 +31,8 @@ internal sealed class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCom
             };
         }
 
-        await _groupRepository.DeleteAsync(speciality, cancellationToken);
-        await _groupRepository.SaveChangesAsync(cancellationToken);
+        await groupRepository.DeleteAsync(speciality, cancellationToken);
+        await groupRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

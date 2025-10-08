@@ -50,17 +50,8 @@ public sealed class CreateStudentCommandValidator : AbstractValidator< CreateStu
     }
 }
 
-internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, ApiResponse<CreateStudentDto>>
+internal sealed class CreateStudentCommandHandler(IStudentRepository studentRepository, IMapper mapper) : IRequestHandler<CreateStudentCommand, ApiResponse<CreateStudentDto>>
 {
-    private readonly IStudentRepository _studentRepository;
-    private readonly IMapper _mapper;
-
-    public CreateStudentCommandHandler(IStudentRepository studentRepository, IMapper mapper)
-    {
-        _studentRepository = studentRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<CreateStudentDto>> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
         var student = new Student(
@@ -83,11 +74,10 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
         if (!string.IsNullOrWhiteSpace(request.ImageUrl))
             student.SetImageUrl(request.ImageUrl);
 
-        await _studentRepository.AddAsync(student, cancellationToken);
-        await _studentRepository.SaveChangesAsync(cancellationToken);
+        await studentRepository.AddAsync(student, cancellationToken);
+        await studentRepository.SaveChangesAsync(cancellationToken);
 
-        var createStudentDto = _mapper.Map<CreateStudentDto>(student);
-
+        var createStudentDto = mapper.Map<CreateStudentDto>(student);
  
         return new ApiResponse<CreateStudentDto>
         {
@@ -95,6 +85,5 @@ internal sealed class CreateStudentCommandHandler : IRequestHandler<CreateStuden
             Message = "Student created successfully",
             Data = createStudentDto
         };
-        
     }
 }

@@ -11,17 +11,8 @@ namespace EduCoreApi.Application.Feature.CourseSubjects.Queries;
 
 public sealed record GetCourseSubjects : IRequest<ApiResponse<List<GetCourseSubjectDto>>>;
 
-internal sealed class GetCourseSubjectsHendler : IRequestHandler<GetCourseSubjects, ApiResponse<List<GetCourseSubjectDto>>>
+internal sealed class GetCourseSubjectsHendler(ICourseSubjectRepository courseSubjectRepository, IMapper mapper) : IRequestHandler<GetCourseSubjects, ApiResponse<List<GetCourseSubjectDto>>>
 {
-    private readonly ICourseSubjectRepository _courseSubjectRepository;
-    private readonly IMapper _mapper;
-
-    public GetCourseSubjectsHendler(ICourseSubjectRepository courseSubjectRepository, IMapper mapper)
-    {
-        _courseSubjectRepository = courseSubjectRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<List<GetCourseSubjectDto>>> Handle(GetCourseSubjects request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<CourseSubject>();
@@ -32,8 +23,7 @@ internal sealed class GetCourseSubjectsHendler : IRequestHandler<GetCourseSubjec
             .Include(a => a.Course)
             .Include(a => a.Subject);
 
-        var specialities = await _courseSubjectRepository.ListAsync(spec, cancellationToken);
-
+        var specialities = await courseSubjectRepository.ListAsync(spec, cancellationToken);courseSubjectRepository
         if (specialities == null)
         {
             return new ApiResponse<List<GetCourseSubjectDto>>
@@ -44,7 +34,7 @@ internal sealed class GetCourseSubjectsHendler : IRequestHandler<GetCourseSubjec
             };
         }
 
-        var specialityDto = _mapper.Map<List<GetCourseSubjectDto>>(specialities);
+        var specialityDto = mapper.Map<List<GetCourseSubjectDto>>(specialities);
 
         return new ApiResponse<List<GetCourseSubjectDto>>
         {

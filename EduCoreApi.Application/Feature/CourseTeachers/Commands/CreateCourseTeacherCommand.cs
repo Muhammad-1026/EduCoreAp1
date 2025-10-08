@@ -23,17 +23,8 @@ public sealed class CreateCourseTeacherCommandValidator : AbstractValidator<Crea
     }
 }
 
-internal sealed class CreateCourseTeacherCommandHandler : IRequestHandler<CreateCourseTeacherCommand, ApiResponse<CreateCourseTeacherDto>>
+internal sealed class CreateCourseTeacherCommandHandler(ICourseTeacherRepository courseTeacherRepository, IMapper mapper) : IRequestHandler<CreateCourseTeacherCommand, ApiResponse<CreateCourseTeacherDto>>
 {
-    private readonly ICourseTeacherRepository _courseTeacherRepository;
-    private readonly IMapper _mapper;
-
-    public CreateCourseTeacherCommandHandler(ICourseTeacherRepository courseTeacherRepository, IMapper mapper)
-    {
-        _courseTeacherRepository = courseTeacherRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<CreateCourseTeacherDto>> Handle(CreateCourseTeacherCommand request, CancellationToken cancellationToken)
     {
         var courseSubject = new CourseTeacher(
@@ -44,10 +35,10 @@ internal sealed class CreateCourseTeacherCommandHandler : IRequestHandler<Create
              Guid.Empty
         );
 
-        await _courseTeacherRepository.AddAsync(courseSubject, cancellationToken);
-        await _courseTeacherRepository.SaveChangesAsync(cancellationToken);
+        await courseTeacherRepository.AddAsync(courseSubject, cancellationToken);
+        await courseTeacherRepository.SaveChangesAsync(cancellationToken);
 
-        var createGroupDto = _mapper.Map<CreateCourseTeacherDto>(courseSubject);
+        var createGroupDto = mapper.Map<CreateCourseTeacherDto>(courseSubject);
 
         return new ApiResponse<CreateCourseTeacherDto>
         {

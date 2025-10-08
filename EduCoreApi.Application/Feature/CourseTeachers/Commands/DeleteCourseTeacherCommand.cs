@@ -17,18 +17,11 @@ public sealed class DeleteCourseTeacherCommandValidator : AbstractValidator<Dele
     }
 }
 
-internal sealed class DeleteCourseTeacherCommandHandler : IRequestHandler<DeleteCourseTeacherCommand, ApiResponse>
+internal sealed class DeleteCourseTeacherCommandHandler(ICourseTeacherRepository courseTeacherRepository) : IRequestHandler<DeleteCourseTeacherCommand, ApiResponse>
 {
-    private readonly ICourseTeacherRepository _courseTeacherRepository;
-
-    public DeleteCourseTeacherCommandHandler(ICourseTeacherRepository courseTeacherRepository)
-    {
-        _courseTeacherRepository = courseTeacherRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteCourseTeacherCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _courseTeacherRepository.FirstOrDefaultAsync(new CourseTeacherByIdSpec(request.CourseTeacherId), cancellationToken);
+        var speciality = await courseTeacherRepository.FirstOrDefaultAsync(new CourseTeacherByIdSpec(request.CourseTeacherId), cancellationToken);
 
         if (speciality is null)
         {
@@ -39,8 +32,8 @@ internal sealed class DeleteCourseTeacherCommandHandler : IRequestHandler<Delete
             };
         }
 
-        await _courseTeacherRepository.DeleteAsync(speciality, cancellationToken);
-        await _courseTeacherRepository.SaveChangesAsync(cancellationToken);
+        await courseTeacherRepository.DeleteAsync(speciality, cancellationToken);
+        await courseTeacherRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

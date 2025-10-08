@@ -12,23 +12,14 @@ namespace EduCoreApi.Application.Feature.Students.Queries;
 
 public sealed record GetStudents : IRequest<ApiResponse<List<GetStudentDto>>>;
 
-internal sealed class GetStudentsHendler : IRequestHandler<GetStudents, ApiResponse<List<GetStudentDto>>>
+internal sealed class GetStudentsHendler(IStudentRepository studentRepository, IMapper mapper) : IRequestHandler<GetStudents, ApiResponse<List<GetStudentDto>>>
 {
-    private readonly IStudentRepository _studentRepository;
-    private readonly IMapper _mapper;
-
-    public GetStudentsHendler(IStudentRepository studentRepository, IMapper mapper)
-    {
-        _studentRepository = studentRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<List<GetStudentDto>>> Handle(GetStudents request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Student>();
         spec.Query.AsNoTracking();
 
-        var students = await _studentRepository.ListAsync(spec, cancellationToken);
+        var students = await studentRepository.ListAsync(spec, cancellationToken);
 
         if (students == null)
         {
@@ -40,7 +31,7 @@ internal sealed class GetStudentsHendler : IRequestHandler<GetStudents, ApiRespo
             };
         }
 
-        var studentDto = _mapper.Map<List<GetStudentDto>>(students);
+        var studentDto = mapper.Map<List<GetStudentDto>>(students);
 
         return new ApiResponse<List<GetStudentDto>>
         {

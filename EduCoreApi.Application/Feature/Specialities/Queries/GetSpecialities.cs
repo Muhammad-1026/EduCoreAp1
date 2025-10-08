@@ -11,17 +11,8 @@ namespace EduCoreApi.Application.Feature.Specialitys.Queries;
 
 public sealed record GetSpecialities : IRequest<ApiResponse<List<GetSpecialityDto>>>;
 
-internal sealed class GetSpecialitiesHendler : IRequestHandler<GetSpecialities, ApiResponse<List<GetSpecialityDto>>>
+internal sealed class GetSpecialitiesHendler(ISpecialityRepository specialityRepository, IMapper mapper) : IRequestHandler<GetSpecialities, ApiResponse<List<GetSpecialityDto>>>
 {
-    private readonly ISpecialityRepository _specialityRepository;
-    private readonly IMapper _mapper;
-
-    public GetSpecialitiesHendler(ISpecialityRepository specialityRepository, IMapper mapper)
-    {
-        _specialityRepository = specialityRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<List<GetSpecialityDto>>> Handle(GetSpecialities request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Speciality>();
@@ -30,7 +21,7 @@ internal sealed class GetSpecialitiesHendler : IRequestHandler<GetSpecialities, 
             .AsNoTracking()
             .Include(s => s.Department);
 
-        var specialities = await _specialityRepository.ListAsync(spec, cancellationToken);
+        var specialities = await specialityRepository.ListAsync(spec, cancellationToken);
 
         if (specialities == null)
         {
@@ -42,7 +33,7 @@ internal sealed class GetSpecialitiesHendler : IRequestHandler<GetSpecialities, 
             };
         }
 
-        var specialityDto =  _mapper.Map<List<GetSpecialityDto>>(specialities);
+        var specialityDto =  mapper.Map<List<GetSpecialityDto>>(specialities);
 
         return new ApiResponse<List<GetSpecialityDto>>
         {

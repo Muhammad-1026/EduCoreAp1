@@ -33,7 +33,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Create([FromBody] CreateStudentCommand createStudentCommand, CancellationToken cancellationToken = default)
     {
         var response = await mediator.Send(createStudentCommand, cancellationToken);
 
@@ -44,7 +44,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromForm] UpdateStudentCommand updateStudentCommand, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Update([FromBody] UpdateStudentCommand updateStudentCommand, CancellationToken cancellationToken = default)
     {
         var response = await mediator.Send(updateStudentCommand, cancellationToken);
 

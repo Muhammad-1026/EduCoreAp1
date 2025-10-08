@@ -17,18 +17,11 @@ public sealed class DeleteDepartmentCommandValidator : AbstractValidator<DeleteD
     }
 }
 
-internal sealed class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDepartmentCommand, ApiResponse>
+internal sealed class DeleteDepartmentCommandHandler(IDepartmentRepository departmentRepository) : IRequestHandler<DeleteDepartmentCommand, ApiResponse>
 {
-    private readonly IDepartmentRepository _departmentRepository;
-
-    public DeleteDepartmentCommandHandler(IDepartmentRepository departmentRepository)
-    {
-        _departmentRepository = departmentRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken)
     {
-        var department = await _departmentRepository.FirstOrDefaultAsync(new DepartmentByIdSpec(request.DepartmentId), cancellationToken);
+        var department = await departmentRepository.FirstOrDefaultAsync(new DepartmentByIdSpec(request.DepartmentId), cancellationToken);
 
         if (department is null)
         {
@@ -39,8 +32,8 @@ internal sealed class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDep
             };
         }
 
-        await _departmentRepository.DeleteAsync(department, cancellationToken);
-        await _departmentRepository.SaveChangesAsync(cancellationToken);
+        await departmentRepository.DeleteAsync(department, cancellationToken);
+        await departmentRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

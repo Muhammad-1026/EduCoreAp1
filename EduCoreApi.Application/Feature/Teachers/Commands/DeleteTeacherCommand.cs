@@ -17,18 +17,11 @@ public sealed class DeleteTeacherCommandValidator : AbstractValidator<DeleteTeac
     }
 }
 
-internal sealed class DeleteTeacherCommandHandler : IRequestHandler<DeleteTeacherCommand, ApiResponse>
+internal sealed class DeleteTeacherCommandHandler(ITeacherRepository teacherRepository) : IRequestHandler<DeleteTeacherCommand, ApiResponse>
 {
-    private ITeacherRepository _teacherRepository;
-
-    public DeleteTeacherCommandHandler(ITeacherRepository teacherRepository)
-    {
-        _teacherRepository = teacherRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
     {
-        var teacher = await _teacherRepository.FirstOrDefaultAsync(new TeacherByIdSpec(request.TeacherId), cancellationToken);
+        var teacher = await teacherRepository.FirstOrDefaultAsync(new TeacherByIdSpec(request.TeacherId), cancellationToken);
 
         if (teacher == null)
             return new ApiResponse
@@ -37,8 +30,8 @@ internal sealed class DeleteTeacherCommandHandler : IRequestHandler<DeleteTeache
                 Message = "Teacher not found",
             };
 
-        await _teacherRepository.DeleteAsync(teacher);
-        await _teacherRepository.SaveChangesAsync(cancellationToken);
+        await teacherRepository.DeleteAsync(teacher);
+        await teacherRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

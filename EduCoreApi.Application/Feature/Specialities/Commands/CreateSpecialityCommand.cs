@@ -1,10 +1,10 @@
-﻿using EduCoreApi.Application.Feature.Specialities.Models;
+﻿using EduCoreApi.Application.Common.Repositories;
 using EduCoreApi.Application.Common.Results;
+using EduCoreApi.Application.Feature.Specialities.Models;
 using EduCoreApi.Domain.Models;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
-using EduCoreApi.Application.Common.Repositories;
 
 namespace EduCoreApi.Application.Feature.Specialitys.Commands;
 
@@ -25,17 +25,8 @@ public sealed class CreateSpecialityCommandValidator : AbstractValidator<CreateS
     }
 }
 
-internal sealed class CreateSpecialityCommandHandler : IRequestHandler<CreateSpecialityCommand, ApiResponse<CreateSpecialityDto>>
+internal sealed class CreateSpecialityCommandHandler(ISpecialityRepository specialityRepository, IMapper mapper) : IRequestHandler<CreateSpecialityCommand, ApiResponse<CreateSpecialityDto>>
 {
-    private readonly ISpecialityRepository _specialityRepository;
-    private readonly IMapper _mapper;
-
-    public CreateSpecialityCommandHandler(ISpecialityRepository specialityRepository, IMapper mapper)
-    {
-        _specialityRepository = specialityRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<CreateSpecialityDto>> Handle(CreateSpecialityCommand request, CancellationToken cancellationToken)
     {
         var speciality = new Speciality(
@@ -43,7 +34,7 @@ internal sealed class CreateSpecialityCommandHandler : IRequestHandler<CreateSpe
             request.Code,
             request.DepartmentId,
             // createdBy TODO: replace with actual user id
-            Guid.Empty 
+            Guid.Empty
         );
 
         if (!string.IsNullOrWhiteSpace(request.Description))
@@ -51,10 +42,10 @@ internal sealed class CreateSpecialityCommandHandler : IRequestHandler<CreateSpe
             speciality.SetDescription(request.Description);
         }
 
-        await _specialityRepository.AddAsync(speciality, cancellationToken);
-        await _specialityRepository.SaveChangesAsync(cancellationToken);
+        await specialityRepository.AddAsync(speciality, cancellationToken);
+        await specialityRepository.SaveChangesAsync(cancellationToken);
 
-        var specialityDto = _mapper.Map<CreateSpecialityDto>(speciality);
+        var specialityDto = mapper.Map<CreateSpecialityDto>(speciality);
 
         return new ApiResponse<CreateSpecialityDto>
         {

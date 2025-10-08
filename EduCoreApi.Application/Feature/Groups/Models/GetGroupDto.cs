@@ -1,7 +1,4 @@
-﻿using EduCoreApi.Application.Feature.Students.Models;
-using EduCoreApi.Application.Feature.TimeTables.Models;
-
-namespace EduCoreApi.Application.Feature.Groups.Models;
+﻿namespace EduCoreApi.Application.Feature.Groups.Models;
 
 public class GetGroupDto
 {
@@ -12,7 +9,4 @@ public class GetGroupDto
 
     public Guid SpecialityId { get; set; }
     public string SpecialityName { get; set; } = default!;
-
-    public List<GetStudentDto> Students { get; set; } = new();
-    public List<GetTimeTableDto> TimeTables { get; set; } = new();
 }

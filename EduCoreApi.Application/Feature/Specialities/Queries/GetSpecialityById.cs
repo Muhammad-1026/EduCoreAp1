@@ -19,16 +19,8 @@ public sealed class GetSpecialityByIdValidator : AbstractValidator<GetSpeciality
     }
 }
 
-internal sealed class GetSpecialityByIdHendler : IRequestHandler<GetSpecialityById, ApiResponse<GetSpecialityDto>>
+internal sealed class GetSpecialityByIdHendler(ISpecialityRepository specialityRepository, IMapper mapper) : IRequestHandler<GetSpecialityById, ApiResponse<GetSpecialityDto>>
 {
-    private readonly ISpecialityRepository _specialityRepository;
-    private readonly IMapper _mapper;
-    public GetSpecialityByIdHendler(ISpecialityRepository specialityRepository, IMapper mapper)
-    {
-        _specialityRepository = specialityRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetSpecialityDto>> Handle(GetSpecialityById request, CancellationToken cancellationToken)
     {
         var spec = new SpecialityByIdSpec(request.SpecialityId, asNoTracking: true);
@@ -37,7 +29,7 @@ internal sealed class GetSpecialityByIdHendler : IRequestHandler<GetSpecialityBy
             .AsNoTracking()
             .Include(s => s.Department);
 
-        var speciality = await _specialityRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var speciality = await specialityRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (speciality == null)
         {
@@ -49,7 +41,7 @@ internal sealed class GetSpecialityByIdHendler : IRequestHandler<GetSpecialityBy
             };
         }
 
-        var specialityDto = _mapper.Map<GetSpecialityDto>(speciality);
+        var specialityDto = mapper.Map<GetSpecialityDto>(speciality);
 
         return new ApiResponse<GetSpecialityDto>
         {

@@ -45,17 +45,8 @@ public sealed class CreateTeacherCommmandValidator : AbstractValidator<CreateTea
     }
 }
 
-internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeacherCommmand, ApiResponse<CreateTeacherDto>>
+internal sealed class CrateTeacherCommmandHandler(ITeacherRepository teacherRepository, IMapper mapper) : IRequestHandler<CreateTeacherCommmand, ApiResponse<CreateTeacherDto>>
 {
-    private readonly ITeacherRepository _teacherRepository;
-    private readonly IMapper _mapper;
-
-    public CrateTeacherCommmandHandler(ITeacherRepository teacherRepository, IMapper mapper)
-    {
-        _teacherRepository = teacherRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<CreateTeacherDto>> Handle(CreateTeacherCommmand request, CancellationToken cancellationToken)
     {
         var teacher = new Teacher(
@@ -75,10 +66,10 @@ internal sealed class CrateTeacherCommmandHandler : IRequestHandler<CreateTeache
         if (!string.IsNullOrWhiteSpace(request.Email))
             teacher.SetEmail(request.Email);
 
-        await _teacherRepository.AddAsync(teacher);
-        await _teacherRepository.SaveChangesAsync(cancellationToken);
+        await teacherRepository.AddAsync(teacher);
+        await teacherRepository.SaveChangesAsync(cancellationToken);
 
-        var teacherDto = _mapper.Map<CreateTeacherDto>(teacher);
+        var teacherDto = mapper.Map<CreateTeacherDto>(teacher);
 
         return new ApiResponse<CreateTeacherDto>
         {

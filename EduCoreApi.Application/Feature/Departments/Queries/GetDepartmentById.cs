@@ -19,22 +19,13 @@ public sealed class GetDepartmentByIdValidator : AbstractValidator<GetDepartment
     }
 }
 
-internal sealed class GetByIdDepartmentHandler : IRequestHandler<GetDepartmentById, ApiResponse<GetDepartmentDto>>
+internal sealed class GetByIdDepartmentHandler(IDepartmentRepository departmentRepository, IMapper mapper) : IRequestHandler<GetDepartmentById, ApiResponse<GetDepartmentDto>>
 {
-    private readonly IDepartmentRepository _departmentRepository;
-    private readonly IMapper _mapper;
-
-    public GetByIdDepartmentHandler(IDepartmentRepository departmentRepository, IMapper mapper)
-    {
-        _departmentRepository = departmentRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetDepartmentDto>> Handle(GetDepartmentById request, CancellationToken cancellationToken)
     {
 
         var spec = new DepartmentByIdSpec(request.DepartmentId, asNoTracking: true);
-        var department = await _departmentRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var department = await departmentRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (department == null)
         {
@@ -49,7 +40,7 @@ internal sealed class GetByIdDepartmentHandler : IRequestHandler<GetDepartmentBy
         {
             Code = 200,
             Message = "Department retrieved successfully",
-            Data = _mapper.Map<GetDepartmentDto>(department)
+            Data = mapper.Map<GetDepartmentDto>(department)
         };
     }
 }

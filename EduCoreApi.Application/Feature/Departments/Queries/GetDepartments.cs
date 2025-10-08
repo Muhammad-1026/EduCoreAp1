@@ -11,23 +11,14 @@ namespace EduCoreApi.Application.Feature.Departments.Queries;
 
 public sealed record GetDepartments : IRequest<ApiResponse<List<GetDepartmentDto>>>;
 
-internal sealed class GetDepartmentsHandler : IRequestHandler<GetDepartments, ApiResponse<List<GetDepartmentDto>>>
+internal sealed class GetDepartmentsHandler(IDepartmentRepository departmentRepository, IMapper mapper) : IRequestHandler<GetDepartments, ApiResponse<List<GetDepartmentDto>>>
 {
-    private readonly IDepartmentRepository _departmentRepository;
-    private readonly IMapper _mapper;
-
-    public GetDepartmentsHandler(IDepartmentRepository departmentRepository, IMapper mapper)
-    {
-        _departmentRepository = departmentRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<List<GetDepartmentDto>>> Handle(GetDepartments request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Department>();
         spec.Query.AsNoTracking();
 
-        var departments = await _departmentRepository.ListAsync(spec, cancellationToken);
+        var departments = await departmentRepository.ListAsync(spec, cancellationToken);
 
         if (departments == null)
         {
@@ -38,7 +29,7 @@ internal sealed class GetDepartmentsHandler : IRequestHandler<GetDepartments, Ap
             };
         }
 
-        var departmentDto = _mapper.Map<List<GetDepartmentDto>>(departments);
+        var departmentDto = mapper.Map<List<GetDepartmentDto>>(departments);
 
         return new ApiResponse<List<GetDepartmentDto>>
         {

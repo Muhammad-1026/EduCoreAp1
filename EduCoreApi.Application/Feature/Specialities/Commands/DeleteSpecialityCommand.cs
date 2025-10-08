@@ -16,18 +16,11 @@ public sealed class DeleteSpecialityCommandValidator : AbstractValidator<DeleteS
     }
 }
 
-internal sealed class DeleteSpecialityCommandHandler : IRequestHandler<DeleteSpecialityCommand, ApiResponse>
+internal sealed class DeleteSpecialityCommandHandler(ISpecialityRepository specialityRepository) : IRequestHandler<DeleteSpecialityCommand, ApiResponse>
 {
-    private readonly ISpecialityRepository _specialityRepository;
-
-    public DeleteSpecialityCommandHandler(ISpecialityRepository specialityRepository)
-    {
-        _specialityRepository = specialityRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteSpecialityCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _specialityRepository.FirstOrDefaultAsync(new SpecialityByIdSpec(request.SpecialityId), cancellationToken);
+        var speciality = await specialityRepository.FirstOrDefaultAsync(new SpecialityByIdSpec(request.SpecialityId), cancellationToken);
 
         if (speciality is null)
         {
@@ -38,8 +31,8 @@ internal sealed class DeleteSpecialityCommandHandler : IRequestHandler<DeleteSpe
             };
         }
 
-        await _specialityRepository.DeleteAsync(speciality, cancellationToken);
-        await _specialityRepository.SaveChangesAsync(cancellationToken);
+        await specialityRepository.DeleteAsync(speciality, cancellationToken);
+        await specialityRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

@@ -55,18 +55,11 @@ public sealed class UpdateStudentCommandValidator : AbstractValidator<UpdateStud
     }
 }
 
-internal sealed class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, ApiResponse<Guid>>
+internal sealed class UpdateStudentCommandHandler(IStudentRepository studentRepository) : IRequestHandler<UpdateStudentCommand, ApiResponse<Guid>>
 {
-    private readonly IStudentRepository _studentRepository;
-
-    public UpdateStudentCommandHandler(IStudentRepository studentRepository)
-    {
-        _studentRepository = studentRepository;
-    }
-
     public async Task<ApiResponse<Guid>> Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _studentRepository.FirstOrDefaultAsync(new StudentByIdSpec(request.StudentId), cancellationToken);
+        var speciality = await studentRepository.FirstOrDefaultAsync(new StudentByIdSpec(request.StudentId), cancellationToken);
 
         if (speciality is null)
         {
@@ -88,8 +81,8 @@ internal sealed class UpdateStudentCommandHandler : IRequestHandler<UpdateStuden
         speciality.SetGroupId(request.GroupId);
         speciality.SetSpecialityId(request.SpecialityId);
 
-        await _studentRepository.UpdateAsync(speciality, cancellationToken);
-        await _studentRepository.SaveChangesAsync(cancellationToken);
+        await studentRepository.UpdateAsync(speciality, cancellationToken);
+        await studentRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<Guid>
         {

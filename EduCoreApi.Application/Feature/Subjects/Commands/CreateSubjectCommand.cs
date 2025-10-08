@@ -21,17 +21,8 @@ public sealed class CreateSubjectCommandValidator : AbstractValidator<CreateSubj
     }
 }
 
-internal sealed class CreateSubjectCommandHandler : IRequestHandler<CreateSubjectCommand, ApiResponse<CreateSubjectDto>>
+internal sealed class CreateSubjectCommandHandler(ISubjectRepository subjectRepository, IMapper mapper) : IRequestHandler<CreateSubjectCommand, ApiResponse<CreateSubjectDto>>
 {
-    private readonly ISubjectRepository _subjectRepository;
-    private readonly IMapper _mapper;
-
-    public CreateSubjectCommandHandler(ISubjectRepository subjectRepository, IMapper mapper)
-    {
-        _subjectRepository = subjectRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<CreateSubjectDto>> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
     {
         var group = new Subject(
@@ -42,10 +33,10 @@ internal sealed class CreateSubjectCommandHandler : IRequestHandler<CreateSubjec
 
         group.SetDescription(request.Description);
 
-        await _subjectRepository.AddAsync(group, cancellationToken);
-        await _subjectRepository.SaveChangesAsync(cancellationToken);
+        await subjectRepository.AddAsync(group, cancellationToken);
+        await subjectRepository.SaveChangesAsync(cancellationToken);
 
-        var createGroupDto = _mapper.Map<CreateSubjectDto>(group);
+        var createGroupDto = mapper.Map<CreateSubjectDto>(group);
 
         return new ApiResponse<CreateSubjectDto>
         {

@@ -19,22 +19,13 @@ public sealed class GetCourseSubjectByIdValidator : AbstractValidator<GetCourseS
     }
 }
 
-internal sealed class GetCourseSubjectByIdHendler : IRequestHandler<GetCourseSubjectById, ApiResponse<GetCourseSubjectDto>>
+internal sealed class GetCourseSubjectByIdHendler(ICourseSubjectRepository courseSubjectRepository, IMapper mapper) : IRequestHandler<GetCourseSubjectById, ApiResponse<GetCourseSubjectDto>>
 {
-    private readonly ICourseSubjectRepository _courseSubjectRepository;
-    private readonly IMapper _mapper;
-
-    public GetCourseSubjectByIdHendler(ICourseSubjectRepository courseSubjectRepository, IMapper mapper)
-    {
-        _courseSubjectRepository = courseSubjectRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<GetCourseSubjectDto>> Handle(GetCourseSubjectById request, CancellationToken cancellationToken)
     {
         var spec = new CourseSubjectByIdSpec(request.CourseSubjectId, asNoTracking: true);
 
-        var courseSubject = await _courseSubjectRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var courseSubject = await courseSubjectRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
 
         if (courseSubject is null)
@@ -47,7 +38,7 @@ internal sealed class GetCourseSubjectByIdHendler : IRequestHandler<GetCourseSub
             };
         }
 
-        var getGroupDto = _mapper.Map<GetCourseSubjectDto>(courseSubject);
+        var getGroupDto = mapper.Map<GetCourseSubjectDto>(courseSubject);
 
         return new ApiResponse<GetCourseSubjectDto>
         {

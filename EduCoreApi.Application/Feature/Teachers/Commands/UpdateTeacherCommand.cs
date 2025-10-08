@@ -41,17 +41,11 @@ public sealed class UpdateTeacherCommandValidator : AbstractValidator<UpdateTeac
     }
 }
 
-internal sealed class UpdateTeacherCommandHandler : IRequestHandler<UpdateTeacherCommand, ApiResponse>
+internal sealed class UpdateTeacherCommandHandler(ITeacherRepository teacherRepository) : IRequestHandler<UpdateTeacherCommand, ApiResponse>
 {
-    private readonly ITeacherRepository _teacherRepository;
-    public UpdateTeacherCommandHandler(ITeacherRepository teacherRepository)
-    {
-        _teacherRepository = teacherRepository;
-    }
-
     public async Task<ApiResponse> Handle(UpdateTeacherCommand request, CancellationToken cancellationToken)
     {
-        var teacher = await _teacherRepository.FirstOrDefaultAsync(new TeacherByIdSpec(request.DepartmentId), cancellationToken);
+        var teacher = await teacherRepository.FirstOrDefaultAsync(new TeacherByIdSpec(request.DepartmentId), cancellationToken);
 
         if (teacher is null)
         {
@@ -73,8 +67,8 @@ internal sealed class UpdateTeacherCommandHandler : IRequestHandler<UpdateTeache
         if (!string.IsNullOrWhiteSpace(request.ImageURL))
             teacher.SetImageURL(request.ImageURL);
 
-        await _teacherRepository.UpdateAsync(teacher, cancellationToken);
-        await _teacherRepository.SaveChangesAsync(cancellationToken);
+        await teacherRepository.UpdateAsync(teacher, cancellationToken);
+        await teacherRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

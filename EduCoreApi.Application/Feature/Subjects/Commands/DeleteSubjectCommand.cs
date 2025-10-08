@@ -16,18 +16,11 @@ public sealed class DeleteSubjectCommandValidator : AbstractValidator<DeleteSubj
     }
 }
 
-internal sealed class DeleteSubjectCommandHandler : IRequestHandler<DeleteSubjectCommand, ApiResponse>
+internal sealed class DeleteSubjectCommandHandler(ISubjectRepository subjectRepository) : IRequestHandler<DeleteSubjectCommand, ApiResponse>
 {
-    private readonly ISubjectRepository _subjectRepository;
-
-    public DeleteSubjectCommandHandler(ISubjectRepository subjectRepository)
-    {
-        _subjectRepository = subjectRepository;
-    }
-
     public async Task<ApiResponse> Handle(DeleteSubjectCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _subjectRepository.FirstOrDefaultAsync(new SubjectByIdSpec(request.SubjectId), cancellationToken);
+        var speciality = await subjectRepository.FirstOrDefaultAsync(new SubjectByIdSpec(request.SubjectId), cancellationToken);
 
         if (speciality is null)
         {
@@ -38,8 +31,8 @@ internal sealed class DeleteSubjectCommandHandler : IRequestHandler<DeleteSubjec
             };
         }
 
-        await _subjectRepository.DeleteAsync(speciality, cancellationToken);
-        await _subjectRepository.SaveChangesAsync(cancellationToken);
+        await subjectRepository.DeleteAsync(speciality, cancellationToken);
+        await subjectRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse
         {

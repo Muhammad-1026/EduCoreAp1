@@ -11,17 +11,8 @@ namespace EduCoreApi.Application.Feature.Groups.Queries;
 
 public sealed record GetGroups : IRequest<ApiResponse<List<GetGroupDto>>>;
 
-internal sealed class GetGroupsHendler : IRequestHandler<GetGroups, ApiResponse<List<GetGroupDto>>>
+internal sealed class GetGroupsHendler(IGroupRepository groupRepository, IMapper mapper) : IRequestHandler<GetGroups, ApiResponse<List<GetGroupDto>>>
 {
-    private readonly IGroupRepository _groupRepository;
-    private readonly IMapper _mapper;
-
-    public GetGroupsHendler(IGroupRepository groupRepository, IMapper mapper)
-    {
-        _groupRepository = groupRepository;
-        _mapper = mapper;
-    }
-
     public async Task<ApiResponse<List<GetGroupDto>>> Handle(GetGroups request, CancellationToken cancellationToken)
     {
         var spec = new DbSpecifications<Group>();
@@ -31,7 +22,7 @@ internal sealed class GetGroupsHendler : IRequestHandler<GetGroups, ApiResponse<
             .AsNoTracking()
             .Include(s => s.Speciality);
 
-        var specialities = await _groupRepository.ListAsync(spec, cancellationToken);
+        var specialities = await groupRepository.ListAsync(spec, cancellationToken);
 
         if (specialities == null)
         {
@@ -43,7 +34,7 @@ internal sealed class GetGroupsHendler : IRequestHandler<GetGroups, ApiResponse<
             };
         }
 
-        var specialityDto = _mapper.Map<List<GetGroupDto>>(specialities);
+        var specialityDto = mapper.Map<List<GetGroupDto>>(specialities);
 
         return new ApiResponse<List<GetGroupDto>>
         {

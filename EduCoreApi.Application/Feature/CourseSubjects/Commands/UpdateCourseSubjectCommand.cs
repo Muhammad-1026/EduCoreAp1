@@ -23,18 +23,11 @@ public sealed class UpdateCourseSubjectCommandValidator : AbstractValidator<Upda
     }
 }
 
-internal sealed class UpdateCourseSubjectCommandHandler : IRequestHandler<UpdateCourseSubjectCommand, ApiResponse<Guid>>
+internal sealed class UpdateCourseSubjectCommandHandler(ICourseSubjectRepository courseSubjectRepository) : IRequestHandler<UpdateCourseSubjectCommand, ApiResponse<Guid>>
 {
-    private readonly ICourseSubjectRepository _courseSubjectRepository;
-
-    public UpdateCourseSubjectCommandHandler(ICourseSubjectRepository courseSubjectRepository)
-    {
-        _courseSubjectRepository = courseSubjectRepository;
-    }
-
     public async Task<ApiResponse<Guid>> Handle(UpdateCourseSubjectCommand request, CancellationToken cancellationToken)
     {
-        var courseSubject = await _courseSubjectRepository.FirstOrDefaultAsync(new CourseSubjectByIdSpec(request.CourseId), cancellationToken);
+        var courseSubject = await courseSubjectRepository.FirstOrDefaultAsync(new CourseSubjectByIdSpec(request.CourseId), cancellationToken);
 
         if (courseSubject is null)
         {
@@ -50,8 +43,8 @@ internal sealed class UpdateCourseSubjectCommandHandler : IRequestHandler<Update
         courseSubject.SetCredits(request.Credits);
         courseSubject.SetHours(request.Hours);
 
-        await _courseSubjectRepository.UpdateAsync(courseSubject, cancellationToken);
-        await _courseSubjectRepository.SaveChangesAsync(cancellationToken);
+        await courseSubjectRepository.UpdateAsync(courseSubject, cancellationToken);
+        await courseSubjectRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<Guid>
         {

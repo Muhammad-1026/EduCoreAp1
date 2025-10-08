@@ -21,18 +21,11 @@ public sealed class UpdateSubjectCommandValidator : AbstractValidator<UpdateSubj
     }
 }
 
-internal sealed class UpdateSubjectCommandHandler : IRequestHandler<UpdateSubjectCommand, ApiResponse<Guid>>
+internal sealed class UpdateSubjectCommandHandler(ISubjectRepository subjectRepository) : IRequestHandler<UpdateSubjectCommand, ApiResponse<Guid>>
 {
-    private readonly ISubjectRepository _subjectRepository;
-
-    public UpdateSubjectCommandHandler(ISubjectRepository subjectRepository)
-    {
-        _subjectRepository = subjectRepository;
-    }
-
     public async Task<ApiResponse<Guid>> Handle(UpdateSubjectCommand request, CancellationToken cancellationToken)
     {
-        var speciality = await _subjectRepository.FirstOrDefaultAsync(new SubjectByIdSpec(request.SubjectId), cancellationToken);
+        var speciality = await subjectRepository.FirstOrDefaultAsync(new SubjectByIdSpec(request.SubjectId), cancellationToken);
 
         if (speciality is null)
         {
@@ -48,8 +41,8 @@ internal sealed class UpdateSubjectCommandHandler : IRequestHandler<UpdateSubjec
         if (!string.IsNullOrWhiteSpace(request.Description))
             speciality.SetDescription(request.Description);
 
-        await _subjectRepository.UpdateAsync(speciality, cancellationToken);
-        await _subjectRepository.SaveChangesAsync(cancellationToken);
+        await subjectRepository.UpdateAsync(speciality, cancellationToken);
+        await subjectRepository.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<Guid>
         {
