@@ -5,10 +5,7 @@ namespace EduCoreApi.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
-    {
-        //Database.EnsureCreated();
-    }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     DbSet<Student> Students { get; set; }
     DbSet<Group> Groups { get; set; }

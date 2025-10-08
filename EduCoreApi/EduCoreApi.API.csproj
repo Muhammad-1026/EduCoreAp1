@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\**" />
     <Compile Remove="Новая папка\**" />
+    <Content Remove="wwwroot\**" />
     <Content Remove="Новая папка\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <EmbeddedResource Remove="Новая папка\**" />
+    <None Remove="wwwroot\**" />
     <None Remove="Новая папка\**" />
   </ItemGroup>
 
@@ -25,10 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EduCoreApi.Application\EduCoreApi.Application.csproj" />
     <ProjectReference Include="..\EduCoreApi.Infrastructure\EduCoreApi.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
